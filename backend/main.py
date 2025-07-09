@@ -1,32 +1,51 @@
-from fastapi import FastAPI, Request, Form, status
+from fastapi import FastAPI, Request, Form, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from auth import authenticate_user, get_user_role
+from starlette.status import HTTP_302_FOUND
+
 from ai_assistant import ask_ai
-from forms.jobcard_handler import handle_jobcard_submission
-from forms.serviceorder_handler import handle_serviceorder_submission
+from jobcard_handler import handle_jobcard
+from serviceorder_handler import handle_serviceorder
 
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+# Mount templates and static files
+templates = Jinja2Templates(directory="backend/templates")
+app.mount("/static", StaticFiles(directory="backend/static"), name="static")
 
+# Dummy user database for testing
+users = {
+    "client@example.com": {"password": "client123", "role": "client"},
+    "staff@example.com": {"password": "staff123", "role": "staff"}
+}
+
+# -------------------------------
+# Routes
+# -------------------------------
 
 @app.get("/", response_class=HTMLResponse)
-async def login_page(request: Request):
+async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
-@app.post("/login")
-async def login(request: Request, email: str = Form(...), password: str = Form(...)):
-    if authenticate_user(email, password):
-        role = get_user_role(email)
-        if role == "client":
-            return RedirectResponse("/client", status_code=status.HTTP_302_FOUND)
-        elif role == "staff":
-            return RedirectResponse("/pharmalab", status_code=status.HTTP_302_FOUND)
-    return templates.TemplateResponse("index.html", {"request": request, "error": "Invalid email or password"})
+@app.post("/login", response_class=HTMLResponse)
+async def login(
+    request: Request,
+    email: str = Form(...),
+    password: str = Form(...)
+):
+    user = users.get(email)
+    if not user or user["password"] != password:
+        return templates.TemplateResponse("index.html", {"request": request, "error": "Invalid login"})
+
+    # Redirect based on role
+    if user["role"] == "client":
+        response = RedirectResponse("/client", status_code=HTTP_302_FOUND)
+    else:
+        response = RedirectResponse("/pharmalab", status_code=HTTP_302_FOUND)
+
+    return response
 
 
 @app.get("/client", response_class=HTMLResponse)
@@ -35,7 +54,7 @@ async def client_dashboard(request: Request):
 
 
 @app.get("/pharmalab", response_class=HTMLResponse)
-async def pharmalab_dashboard(request: Request):
+async def staff_dashboard(request: Request):
     return templates.TemplateResponse("pharmalab.html", {"request": request})
 
 
@@ -46,7 +65,7 @@ async def jobcard_form(request: Request):
 
 @app.post("/submit-jobcard")
 async def submit_jobcard(request: Request):
-    return await handle_jobcard_submission(request)
+    return await handle_jobcard(request)
 
 
 @app.get("/serviceorder", response_class=HTMLResponse)
@@ -56,7 +75,7 @@ async def serviceorder_form(request: Request):
 
 @app.post("/submit-serviceorder")
 async def submit_serviceorder(request: Request):
-    return await handle_serviceorder_submission(request)
+    return await handle_serviceorder(request)
 
 
 @app.post("/ask")
@@ -65,5 +84,5 @@ async def ask_endpoint(request: Request):
     query = form.get("query")
     if not query:
         return JSONResponse({"error": "No query provided"}, status_code=400)
-    response = ask_ai(query)
+    response = await ask_ai(query)
     return JSONResponse({"response": response})
