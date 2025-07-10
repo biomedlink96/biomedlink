@@ -129,6 +129,54 @@ async def staff_dashboard(request: Request):
     return templates.TemplateResponse("pharmalab.html", {"request": request, "user": user})
 
 
+from fastapi import UploadFile, File
+
+@app.get("/upload-manual", response_class=HTMLResponse)
+async def upload_manual_form(request: Request):
+    user = request.session.get("user")
+    if not user or user["role"] != "staff":
+        return RedirectResponse("/", status_code=HTTP_302_FOUND)
+    return templates.TemplateResponse("upload_manual.html", {"request": request})
+
+
+@app.post("/upload-manual", response_class=HTMLResponse)
+async def upload_manual(
+    request: Request,
+    instrument: str = Form(...),
+    manual: UploadFile = File(...)
+):
+    user = request.session.get("user")
+    if not user or user["role"] != "staff":
+        return RedirectResponse("/", status_code=HTTP_302_FOUND)
+
+    if not instrument or not manual:
+        return templates.TemplateResponse("upload_manual.html", {
+            "request": request,
+            "error": "Missing instrument name or file."
+        })
+
+    try:
+        manual_dir = "manuals"
+        os.makedirs(manual_dir, exist_ok=True)
+
+        file_path = os.path.join(manual_dir, f"{instrument}.txt")
+        contents = await manual.read()
+        with open(file_path, "wb") as f:
+            f.write(contents)
+
+        return templates.TemplateResponse("upload_manual.html", {
+            "request": request,
+            "success": f"Manual for '{instrument}' uploaded successfully."
+        })
+
+    except Exception as e:
+        return templates.TemplateResponse("upload_manual.html", {
+            "request": request,
+            "error": f"Upload failed: {str(e)}"
+        })
+
+
+
 # ---------------------- FORMS ---------------------
 @app.get("/jobcard", response_class=HTMLResponse)
 async def jobcard_form(request: Request):
