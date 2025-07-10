@@ -4,6 +4,9 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.status import HTTP_302_FOUND
 
+from starlette.middleware.sessions import SessionMiddleware
+import secrets
+
 from sqlalchemy.orm import Session
 from backend.db.database import SessionLocal
 from backend.db.models import User
@@ -27,6 +30,7 @@ def get_db():
 
 # ---------------------- FastAPI App Setup ---------------------
 app = FastAPI(debug=True)
+app.add_middleware(SessionMiddleware, secret_key=secrets.token_hex(32))
 templates = Jinja2Templates(directory="backend/templates")
 app.mount("/static", StaticFiles(directory="backend/static"), name="static")
 
@@ -36,8 +40,9 @@ async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 # ---------------------- LOGIN ---------------------
-from fastapi import Depends
-from sqlalchemy.orm import Session
+from fastapi import Depends, Request, Form
+from fastapi.responses import RedirectResponse
+from backend.db.database import get_db
 
 @app.post("/login")
 async def login(
@@ -47,13 +52,17 @@ async def login(
     db: Session = Depends(get_db)
 ):
     user = db.query(User).filter(User.email == email).first()
-    if not user or not pwd_context.verify(password, user.password):
+
+    if not user or not pwd_context.verify(password, user.hashed_password):
         return templates.TemplateResponse("index.html", {
             "request": request,
             "error": "Invalid email or password."
         })
 
-    # Redirect based on user role
+    # ✅ Store session
+    request.session["user"] = {"email": user.email, "role": user.role}
+
+    # ✅ Redirect by role
     if user.role == "client":
         return RedirectResponse("/client", status_code=HTTP_302_FOUND)
     elif user.role == "staff":
@@ -63,6 +72,7 @@ async def login(
             "request": request,
             "error": "Unknown user role."
         })
+
 
 
 # ---------------------- REGISTER ---------------------
