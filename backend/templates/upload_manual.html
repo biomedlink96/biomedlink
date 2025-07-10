@@ -1,0 +1,27 @@
+<!-- upload_manual.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload Equipment Manual</title>
+</head>
+<body>
+  <h2>Upload Equipment Manual</h2>
+  {% if error %}
+    <p style="color:red">{{ error }}</p>
+  {% endif %}
+  {% if success %}
+    <p style="color:green">{{ success }}</p>
+  {% endif %}
+  <form method="post" enctype="multipart/form-data" action="/upload-manual">
+    <label>Instrument Name:</label>
+    <input type="text" name="instrument" required><br><br>
+    
+    <label>Select Manual File (.txt):</label>
+    <input type="file" name="manual" accept=".txt" required><br><br>
+
+    <button type="submit">Upload Manual</button>
+  </form>
+  <br>
+  <a href="/pharmalab">⬅ Back to Dashboard</a>
+</body>
+</html>
