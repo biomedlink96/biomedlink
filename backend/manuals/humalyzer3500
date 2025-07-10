@@ -1,0 +1,1118 @@
+HumaLyzer 3500
+| Service Manual
+|
+Cat.No. 16801/2
+i
+Revision List of the Manual
+No.
+Rev. / Date
+REVISION DESCRIPTION
+1
+01/2006-12
+First edititon
+ii
+a
+NOTICE
+Analytical instruments for in vitro diagnostic application involve the handling of human samples and controls
+which should be considered at least potentially infectious. Therefore every part and accessory of the respective
+instrument which may have come into contact with such samples must equally be considered as potentially
+infectious.
+BIOHAZARD
+The „BIOHAZARD“ warning label must be affixed to instrument prior to first use with biological material !
+Servicing Note:
+Before doing any servicing on the instrument it is very important to thoroughly disinfect all possibly contaminated
+parts. Before the instrument is removed from the laboratory for disposal or servicing, it must be decontaminated.
+Decontamination should be performed by authorised well-trained personnel only, observing all necessary safety
+precautions. Instruments to be returned have to be accompanied by a decontamination certificate completed by
+the responsible laboratory manager. If a decontamination certificate is not supplied, the returning laboratory will
+be responsible for charges resulting from non-acceptance of the instrument by the servicing centre, or from
+authority’s interventions.
+HUMAN
+Gesellschaft für Biochemica und Diagnostica mbH
+| Max-Planck-Ring 21 · 65205 Wiesbaden · Germany
+| Tel.: +49 61 22/99 88-0 · Fax: +49 61 22/99 88-100
+| e-Mail: human@human.de · www.human.de
+b
+Contents
+1
+Introduction
+3
+2
+Description of the Analyzer
+3
+2.1
+Technical specifications
+4
+2.2
+Rear panel setting
+4
+2.3
+Location of the Instrument
+5
+2.4
+Power supply connection
+5
+2.5
+Caution
+5
+2.6
+Measurement block
+5
+2.7
+Tube setting
+6
+2.8
+Incubator
+7
+2.9
+Printer Settings
+7
+3
+INSTRUMENT CALIBRATION
+8
+3.1
+Display Contrast Regulation
+8
+3.2
+Analogic Photometer Calibration (Set voltmeter range to milliVolt)
+8
+3.3
+Tension regulation
+8
+4
+SERVICE MENU:
+9
+4.1
+FILTERS SEL.
+10
+4.1.1
+Check rotation functionality of filter wheel
+10
+4.2
+T. CUVETTE
+11
+4.2.1
+Cuvette/Incubator temperature calibration
+11
+4.3
+T.INCUBATOR
+11
+4.3.1
+Cuvette/Incubator temperature calibration
+11
+4.4
+READING ABS
+12
+4.5
+Lamp Targeting
+13
+4.5.1
+ABS Mode Measurement
+13
+4.5.2
+Tension Mode Measurement
+13
+4.5.3
+In case that it is not possible to obtain such tension values:
+14
+4.6
+WASHING
+14
+4.7
+DOWN LOAD
+15
+4.8
+UPLOAD
+15
+4.9
+CALIBRATION PUMP
+16
+4.9.1
+Humalyzer Hydraulic Layout:
+17
+4.9.2
+CALIBRATION TS (TOUCH SCREEN)
+18
+4.9.3
+Recalibrate Touch Screen:
+18
+4.10
+HOST
+19
+5
+TESTING HumaLyzer
+20
+5.1
+Check voltage test point (Voltmeter 20 Vcc)
+20
+5.1.1
+Check continuos Voltage (TP2 is ground).
+20
+5.2
+Check linearity
+20
+6
+OPTICAL GROUP
+20
+2/36
+6.1
+Incubator
+21
+6.2
+Printer
+21
+7
+CONNECTONS CABLES WITH THE BOARD
+21
+7.1
+Appendix 1: Changing lamp
+21
+7.2
+Appendix 3: Red tube changing
+22
+7.3
+Touchscreen Board:
+22
+8
+MAIN BOARD
+23
+8.1
+Software and Firmware Upgrade
+24
+8.1.1
+Managing Firmware upgrade for HumaLyzer
+24
+8.1.2
+Diagram wiring for re-programming cable:
+29
+8.1.3
+Peripherals Firmware upgrade for HumaLyzer
+30
+8.1.4
+Program microprocessor (for XP)
+30
+8.1.5
+Automatic Software Loading
+30
+8.1.6
+Scheme Serial PC
+31
+8.1.7
+Special Adapter to J28
+31
+8.2
+Methods Parameter Download and Upload
+32
+8.2.1
+Download Procedure
+33
+8.2.2
+Upload Procedure
+33
+8.3
+Procedure for Touch Screen Replacement
+33
+8.3.1
+Check Calibration
+35
+3/36
+HumaLyzer 3500 Service Manual
+1
+Introduction
+The HumaLyzer 3500 is a semi-automated, programmable photometer intended for In Vitro Diagnostic (IVD) use by
+qualified laboratory staff only.
+For best results become familiar with the instrument and its capabilities before attempting any clinical diagnostic
+tests. Refer any questions to your HUMAN distributor.
+2 Description of the Analyzer
+Technical features:
+Touch screen with virtual alphanumeric keyboard.
+Multilingual capability, up to 6 different languages (Including Chinese characters).
+200 programmable tests.
+1000 results storing capability categorised by date.
+Intelligent patient assay management
+Each test handles 3 different QC (quality control)
+Built-in eight position incubation block.
+Integrated pump and flow cell.
+Programmable Aspiration features (With Re-run Capability)
+Internal pre-adjusted Peltier element at 25°C, 30°C and 37°C.
+16 different QC values storage capability.
+25 QC archives with 100 result capability.
+4/36
+2.1
+Technical specifications
+Graphic Display
+320x240 (1/4 of VGA)
+Patient name length
+16 characters
+Max test storage
+1000 test
+External interface
+PS2 external keyboard (connection on rear side of instrument)
+RS232
+Light source
+Halogen lamp 12V, 20W
+Photo detector
+Silicon based (range 300-1000nm)
+Wavelength
+340nm-700nm.
+Wavelength selection
+Automatic via 8-position filter wheel;
+6 standard interference filters: 340nm, 405nm, 505nm, 546nm, 578nm, 630nm.
+Two free positions for optional filters.
+Photometric Range:
+0-2.5 O.D.
+Flow cell system
+32L flow cell with 10mm light path, interchangeable with disposable macro, semi-
+micro, or special optical glass cuvettes.
+Reading time
+1-999 seconds
+Incubation time
+5-999 seconds.
+Temperature control
+Peltier elements, 25°C, 30°C and 37°C.
+Reaction volume
+500 L per test.
+Printer
+Graphic, 29 characters per line.
+Printing sort
+Batch, profile, reaction dynamics, QC print, Levey Jennings graph curves
+Dimensions
+30cm x 33cm x 37cm
+Weight
+8.4 kg
+Power supply
+110-230 AC 50-60 Hz
+2.2
+Rear panel setting
+Located in the rear panel (from left to right as shown below) you will find:
+1 Fan for internal cooling (a duplicate is located under the instrument).
+2 The power supply switch.
+3 The waste outlet.
+4 RS232 connection
+5 PS2 External standard keyboard connection
+WASTE OUTLET: Before switching on the instrument, remember to connect the plastic outlet connector (red) to a
+waste tank by means of a silicone tube.
+2) POLYSNAP and POWER SWITCH
+3) OUTLET
+1) FAN
+4) RS232, IBM printer kompatibel
+5) PS2
+5/36
+HumaLyzer 3500 Service Manual
+2.3
+Location of the Instrument
+The instrument should be located in a clean environment, placed on a stable surface, and away from direct
+sunlight, which could affect the operating temperature and the quantity of light measured by the instrument.
+The following points should be taken into consideration.
+-
+Ensure that it is on a level surface.
+-
+Avoid positions subject to jerks or vibrations.
+-
+Make sure that the instrument is not placed close to air conditioning or heat sources.
+-
+For the long life of the instrument these temperature conditions should be followed:
+5°C
+-
+50°C for instrument storage.
+15°C
+-
+30°C for instrument use.
+2.4
+Power supply connection
+-
+Please check the setting of the power supply switch according to your country’s electrical network.
+-
+Connect the power plug to a good grounded AC wall outlet, preferably one that is not shared with other
+electric appliances and with low fluctuation of line voltage compared to the standard voltage specified
+(10-15%).
+-
+Keep the instrument away from other appliances that generate high frequency electrical noises (e.g.
+radiological instruments).
+-
+Before connecting the power cord, check that the AC power supply corresponds to the value that is
+stated on the instrument’s label.
+2.5
+Caution
+Do not connect the instrument to a power supply different from the value indicated on the label.
+-
+Before connecting the power and finishing the installation section, make sure that the instrument is turned
+off (check the polysnap located on the rear part of the instrument).
+-
+Make sure that your AC main line has an efficient ground line. A bad ground line connection may
+compromise analysis results and damage the instrument.
+-
+After turning on the instrument, pay attention not to spill liquids or micro solid substances on the surface
+around the instrument.
+-
+Keep the instrument away from young children.
+If the above procedures are carefully followed, it will be possible to TURN ON the instrument by using the switch
+located on the polysnap block.
+2.6
+Measurement block
+Open the measurement block cover lid, positioned on the top left part of the instrument. Inside you will see:
+-
+Peristaltic pump that allows the solution to enter the instrument for measurement.
+-
+Incubator well which keeps the flow-cell or manual cuvette at the temperature of approximately 37° C.
+-
+Inlet tube.
+6/36
+2.7
+Tube setting
+Make sure that the transparent tube (the one that connects the flow-cell with the internal hydraulic circuit) is not
+twisted or squashed.
+Place the red tube around the peristaltic pump and make sure that the white plastic connections are set as shown
+in the figure below:
+Under the measurement block there is a lever (the PUSH button). Press the lever for no more than half a second to
+pump samples into the flow cell.
+RED TUBE
+INLET TUBE
+PUMP
+CUVETTE POSITION
+PUSH button
+INLET PIPE
+MEASUREMENT
+7/36
+HumaLyzer 3500 Service Manual
+2.8
+Incubator
+The incubator temperature is brought up to 37°C by the software and it will remain constant until the instrument
+is turned off.
+NOTE: It is very important to heat the macro cuvettes to the proper temperature for obtaining the most accurate
+analysis results.
+Built-in incubation block.
+2.9
+Printer Settings
+To insert the paper roll, proceed as follows:
+- Pull the lever to open the cover as shown in step 1
+- Take a new paper roll, insert it as shown in step 2
+- Pull the edge of the paper out of the printer as shown in step 3
+- Close the cover as shown in step 4
+Step 1
+Step 2
+Step 3
+Step 4
+8/36
+3 INSTRUMENT CALIBRATION
+3.1
+Display Contrast Regulation
+- Switch on the instrument
+- Regulate RV1 on the display interface board (under the TS display) to get a good contrast
+3.2
+Analogic Photometer Calibration (Set voltmeter range to milliVolt)
+Switch on the instrument (for diagram refer to pag.26)
+First Stage
+- Shortcircuit JP1
+- Connect the voltmeter between TP10 and TP2
+- Regulate RV2 to read 0 volts
+- Open JP1
+Second Stage
+- Shortcircuit JP2
+- Connect the voltmeter between TP9 and TP2
+- Regulate RV1 to read 0 volts
+- Open JP2
+3.3
+Tension regulation
+- Switch on the instrument
+- Regulate the trimmer on the right side of the power supply so that between the yellow wire and the black
+wire of J26 you measure about 13.5 Volt
+For the Lamp targeting procedure please follow instructions on page 12
+9/36
+HumaLyzer 3500 Service Manual
+4 SERVICE MENU:
+In order to enter in service menu:
+1) Switch on the instrument
+2) From main menu, press in quick sequence the box number 1, 2 and 3 as shown in below figure:
+The service menu will appear:
+2
+1
+3
+10/36
+This service menu will display different menus as follow:
+1. FILTER SEL.
+2. FILTER MOT.*
+3. PUMP*
+4. PUMP MOT.*
+5. READING AD*
+6. T. CUVETTE
+7. T.INCUBATOR
+8. WAIT PUSH*
+9. READING ABS
+10. WASHING
+11. DOWN LOAD
+12. UPLOAD
+13. CALIBRATION PUMP
+14. CALIBRATION TS (TOUCH SCREEN)
+15. HOST
+(*): This menus are dedicated for internal company testing procedure. No intended use for service.
+4.1
+FILTERS SEL.
+This menu will allow:
+4.1.1
+Check rotation functionality of filter wheel
+In order to rotate the filter wheel and set the selected filter wavelength under the light path, proceed as follow:
+1.
+Press the “SEL. FILTER” message and the sub-menu will appear.
+2.
+Use the right and left arrows to select a specific filter wavelength, and then press Exec.
+3.
+The filter wheel will rotate in order to set the selected filter under the light path.
+4.
+340nm> no colour
+5.
+405> Violet
+6.
+505> Dark Green
+7.
+546> light Green
+8.
+578> Yellow
+9.
+630> Red
+11/36
+HumaLyzer 3500 Service Manual
+4.2
+T. CUVETTE
+Press the “T. CUVETTE” message and the sub-menu will appear.
+The 1° row stated as: “Temp. Cuvet” will show the flowcell current temperature.
+In case the temperature need adjustment, proceed as follow:
+4.2.1
+Cuvette/Incubator temperature calibration
+This screen allows you monitoring temperature gradients of incubator and cuvette according to temperature
+displayed in user program and digital level acquired by microcontroller (both current and target).
+-
+Dismantle screws of upper external case.
+-
+Position thermometer’s probes into disposable macrocuvette filled with 0.5ml of water
+-
+Switch on the instrument wait at least 20 minutes.
+-
+Regulate RV4 incubator temperature level to obtain 38,5°C on the external thermometer.
+-
+Regulate RV3 cuvette temperature level to obtain 37,5°C on the external thermometer.
+The message: ”Temperature” will show the target temperature to be reached.
+4.3
+T.INCUBATOR
+Press the “T.INCUBATOR” message and the sub-menu will appear.
+The 1° row stated as: “Temp. Incub.” will show the Incubator block current temperature.
+In case the temperature need adjustment proceed as follow:
+4.3.1
+Cuvette/Incubator temperature calibration
+This screen allows you monitoring temperature gradients of incubator and cuvette according to temperature
+displayed in user program and digital level acquired by microcontroller (both current and target).
+-
+Dismantle screws of upper external case.
+-
+Position thermometer’s probes into disposable macrocuvette filled with 0.5ml of water
+-
+Switch on the instrument wait at least 20 minutes.
+-
+Regulate RV4 incubator temperature level to obtain 38,5°C on the external thermometer.
+-
+Regulate RV3 cuvette temperature level to obtain 37,5°C on the external thermometer.
+12/36
+The message: ”Temperature” will show the target temperature to be reached into incubator block.
+4.4
+READING ABS
+Press the “READING ABS” message and the sub-menu will appear.
+In this menu it is possible to read the Photocell amplifier energy, to perform an Absorbance reading and to target
+the lamp.
+The sub-menu will show:
+-
+Select Filter: The filter that operator want to set, use the right and left arrows to select: (340nm, 405nm,
+505nm, 546nm, 578nm and 630nm)
+-
+Actual Filter: The filter currently placed under the light beam
+-
+Absorbance: The Abs value of the substance present in the flow cell.
+-
+Tension: The mVolt value present on the Photodiode preamp.
+13/36
+HumaLyzer 3500 Service Manual
+4.5
+Lamp Targeting
+DO NOT TOUCH THE LAMP DIRECTLY WITH THE HANDS!
+1.
+Select filter 340, then press the wheel button and make aspiration with distilled water
+2.
+Set the test tube of distilled water in the inlet pipe and press the PUSH button.
+3.
+After a few seconds, continuous evolution of the tension value will appear on the display.
+4.
+Loosen the screws of the lamp stirrup
+5.
+Target the light bundle trough the reading hole to obtain the max tension on the display
+6.
+Screw the screws
+4.5.1
+ABS Mode Measurement
+1.
+Select filter with arrows then press wheel icon, the desired filter will be placed under the light beam
+2.
+In order to obtain the Abs value make and aspiration with water and wait for measurement.
+3.
+Set the test tube of water (or other substances) in the inlet pipe and press the PUSH button.
+4.
+After a few seconds, continuous evolution of the ABS value will appear on the display.
+5.
+Press 0 key to have zero on the current ABS value (water or other substances). You will choose this
+option when you will set to zero the instrument.
+6.
+Prepare a new sample (reagents, potassium-dichromate or others) and press the PUSH button to start a
+new ABS measurement session.
+7.
+At the screen exit, the instrument expels the volume from flow cell via the outlet waste.
+4.5.2
+Tension Mode Measurement
+In “READING ABS” screen you can monitor (after having filled water) tension coming from optical group (OPT TENS)
+and tension coming in A/D converter (A/D TENS) , using a particular filter (FILTER)
+Tension Mode Measurement is very useful to verify lamp calibration, filter / lamp / lens / photodiode / preamp
+board quality, position sensor working.
+Moreover in this screen you can test correct pump motion.
+-
+Press PUSH Button to aspirate distilled water
+-
+To select one filter use the right and left arrows: (340nm 405nm, 505nm, 546nm, 578nm and 630nm)
+-
+Press wheel icon, the desired filter will be placed under the light beam
+-
+Look at all filters TENSION values.
+-
+To change filter, press PUSH BUTTON if you want to fill again water.
+If you have a correct calibrated optical group, when you use the flow cell, the TENSION values are between 250
+mV (for 340 nm) and about 3.5 V (for 630 nm) for all filters.
+14/36
+Regulate trimmer R1 to obtain 3,5 V on the Tension menu (see picture bellow):
+4.5.3
+In case that it is not possible to obtain such tension values:
+-
+Unscrew, to unblock the lamp
+-
+Find the maximum voltage moving slightly in several directions.
+-
+Then fix the lamp bloc with the screws
+4.6
+WASHING
+When pressing this message the peristaltic pump will be activated for around 10 seconds.
+Rear view of the preamp: R1
+Trimmer to regulate tension
+15/36
+HumaLyzer 3500 Service Manual
+4.7
+DOWN LOAD
+Refer to the Methods Parameter Download and Upload paragraph.
+4.8
+UPLOAD
+Refer to the Methods Parameter Download and Upload paragraph.
+16/36
+4.9
+CALIBRATION PUMP
+Now the pump work following a determinate step numbers 4790 is the default pump step number for the
+peristaltic pump, the instrument should aspirate correctly with this number.
+In case the aspiration needs to be calibrated, operate as follow:
+-
+Search with down scroll arrow the “Pump calibration” when highlighted press it the following screen
+will appear:
+The following values will be displayed:
+Pump Calibration
+Steps for 10 ml
+4795
+Steps for a.gap
+50
+Empty
+1500
+-
+Steps for 10 ml:
+Aspiration pump steps for 0.5ml
+-
+Steps for a.gap:
+air gap pump steps
+-
+Empty:
+Waste pump steps
+In case check aspiration as follow:
+-
+Exit from service and from main menu enter in setup menu
+-
+Look for “Automatic empty” menu and insert 5000 value (air gap delay time, equal to 5 seconds), then
+save. See also user manual.
+-
+Enter in Run method and run glucose.
+-
+Prepare 500 l of water in a cuvette set the aspiration tip in a bottom angle of manual cuvette and press
+aspiration button.
+-
+If the pump works correctly, the water should be aspired completely from the manual cuvette, and
+water should stop at the top of the aspiration tip.
+-
+After 5 seconds the air gap will be aspired and liquid front will rise up.
+-
+Repeat operation several times
+17/36
+HumaLyzer 3500 Service Manual
+4.9.1
+Humalyzer Hydraulic Layout:
+After the complete aspiration (sample aspiration + air gap), if water stops after at beginning of aspiration tip or
+stops to near the cuvette the red tube has a problem and you have to adjust aspiration by changing the aspiration
+pump steps.
+Aspiration regulation, proceed as follow:
+1.
+Enter in service menu and open Pump calibration menu.
+2.
+Increase “steps for 10ml” number to increase aspiration pump steps (the liquid will stop nearer to
+cuvette). Use difference of +50 steps each try, then save.
+3.
+Decrease “steps for 10ml” number to decrease aspiration pump steps (the liquid will stop further to
+cuvette). Use difference of -50 steps each try, then save.
+4.
+Exit from service.
+5.
+Enter in Run method and run glucose
+6.
+Prepare 500 l of water in a cuvette set the aspiration tip in a bottom angle of manual cuvette and press 
+aspiration button.
+7.
+If the pump works correctly, the water should be aspired completely from the manual cuvette, and
+water should stop at the top of the aspiration tip.
+8.
+After 5 seconds the air gap will be aspired and liquid front will rise up.
+9.
+Repeat operation several times
+10. If the pump works correctly, the water should be aspired completely from the manual cuvette, and also
+the aspiration tip should be empty from water:
+11. Keep adjusting until the aspiration is correct from point 1
+Flow cell
+Manual curvette
+The aspiration tip should
+be empty from water after
+aspiring
+Water stops here 10 cm
+from cuvette hose after
+air gap.
+Cuvette hose
+Peristaltic pump and Red Tube
+Top of aspiration tip
+18/36
+4.9.2
+CALIBRATION TS (TOUCH SCREEN)
+Scroll down to the Touch screen Calibration menu and select it:
+Inside menu Touch with a pencil and an indicator will appear in correspondence of the pencil tip.
+The tip of the pencil must be in the same position of the indicator, try different position of touch, especially the one
+where you report the problem on keyboard.
+NOTE: DO NOT PRESS TEST BUTTON FOR ANY REASON!
+In case the tip and indicator are too far, you need to recalibrate touch screen.
+Press Door to exit
+4.9.3
+Recalibrate Touch Screen:
+1.
+Press CALIB button
+2.
+with the tip of pencil touch the middle of the flashing indicator until it disappear
+3.
+Repeat this operation for all the indicator that will appear in sequence (16)
+4.
+Exit and the tip of the pencil must be in the same position of the indicator, try different position of
+touch, especially the one where you report the problem on keyboard.
+5.
+If touch screen is now calibrated press SAVE button
+6.
+If still touch screen is still needing adjustment repeat operation from point 1
+19/36
+HumaLyzer 3500 Service Manual
+4.10
+HOST
+A Host (program manage Running under Windows XP and supplied separately) to operate the Humalyzer from an
+external PC.
+In the Host program it is located all the features of the HumaLyzer software, plus an extended database and a large
+choice of printer will able to be used with Humalyzer.
+In order to connect the Humalyzer to a Host Computer via RS232 proceed as follow:
+1.
+Load setup of Host program in the external PC (RS232 required)
+2.
+Connect RS232 to Humalyzer Enter in Service of Humalyzer and select the option Host
+3.
+Run the Host program in the external PC
+4.
+From this moment all commands of HumaLyzer will be delegated to Host PC
+20/36
+5 TESTING HumaLyzer
+5.1
+Check voltage test point (Voltmeter 20 Vcc)
+-
+Switch on the instruments
+5.1.1
+Check continuos Voltage (TP2 is ground).
+-
+TP1 +9Vcc fixed
+-
+TP4 -9Vcc fixed
+-
+TP8 +5Vcc fixed
+Check Voltage between the yellow wire and the black wire of J26 to measure about 13.5 Volt
+5.2
+Check linearity
+-
+Switch on the instrument
+-
+Select ABS
+-
+Press “OK” key
+-
+Extract flow-cell
+-
+Position macro cuvette with distilled water in the cuvette hole, cover with black cylinder the head
+-
+Press PUSH
+-
+Press “0” key for zero setting
+-
+Position cuvette with Dichromate at 25% in the cuvette hole, cover with black cylinder the head
+-
+Press PUSH
+-
+Annotate OPT TENSION value = Vbic25%
+-
+Position cuvette with Dichromate at 100% in the cuvette hole, cover with black cloth the head
+-
+Press PUSH
+-
+Annotate OPT TENSION value = Vbic100%
+-
+Vbic25% x 4   Vbic100% with range of  0,050 otherwise adjust trimmer RV1
+-
+Test finish
+6 OPTICAL GROUP
+21/36
+HumaLyzer 3500 Service Manual
+6.1
+Incubator
+Incubator group contains:
+-
+Incubator.
+-
+One temperature sensor.
+-
+Thermal resistor group.
+6.2
+Printer
+Printer is a serial one with power supply at 5V, 3 A.
+7 CONNECTONS CABLES WITH THE BOARD
+J4-J3
+Fans
+J8
+Lcd Power Supply
+J15
+Printer Power Supply
+J16
+Gnd earth
+J24
+Lamp
+J26
+Power Supply
+J27
+Preamplification Circuit
+J28
+Lcd board OR Programming cable
+J31
+Opb Sennsor
+J32
+Pump Motor
+J33
+Filter Motor
+J36
+Incubator heating elements and temperature sensor
+J37
+Peltier
+J38
+Peltier Temperature Sensor
+7.1
+Appendix 1: Changing lamp
+This is the procedure to change lamp:
+-
+Open case of the instrument, pulling out four screws down the equipment and six ones on the
+back side.
+-
+Unscrew the four screws around the cuvette site, and move away pump support (the one with
+pump rotor).
+-
+Remove the lamp protection box by unscrewing the two screws.
+-
+Move away the little tongue that fixes the lamp, by pulling out the only screw.
+-
+Extract old lamp, and set carefully the new one, bringing it up to the bottom of the site (pay attention to
+not touch lamp glass with finger skin).
+-
+Set up again the little tongue, and check the top of the lamp being inside the little hole.
+-
+Perform Lamp Targeting (see pag.14)
+-
+Set up again the lamp protection box
+-
+Set up again pump support and equipment case.
+22/36
+7.2
+Appendix 3: Red tube changing
+1.
+Disconnect the red tube from peristaltic pump by pulling the red holders.
+2.
+Free the red tube from connector by pulling the two white connector out from red tube:
+3.
+Insert a new tube
+7.3
+Touchscreen Board:
+Holders
+White Connector
+LCD
+panel
+LCD
+BackLight
+Rv1
+trimmer
+Jp11
+Push + Serial Connection to main board
+Jp6
+Power
+Jp12
+External Ps2
+Jp10
+Printer
+Jp9
+Ext. serial
+23/36
+HumaLyzer 3500 Service Manual
+8 MAIN BOARD
+24/36
+8.1
+Software and Firmware Upgrade
+The HumaLyzer is composed by 2 boards, each board carries a microprocessor.
+-
+The Touch Screen board carries a “Managing Firmware” of the instrument. This firmware can be loaded
+directly from serial port present in the rear panel. The 99% of upgrades will be performed on this board.
+-
+The main board controls all the peripherals (device), frequency of re-programming for the “Peripherals
+Firmware” is rare. In order to upgrade the it is necessary to open the instrument.
+8.1.1
+Managing Firmware upgrade for HumaLyzer
+In order to upgrade the instrument firmware, please follow step by step the bellow stated instruction:
+1.
+Connect one side of the re-program cable to one of the available PC COM sockets and the other side to
+the HumaLyzer RS232 sockets
+2.
+Close the contact present on the re-program cable PC/instrument.
+3.
+Switch on the instrument.
+4.
+Start on PC the program FlashSta and perform the following operations:
+Select the COM to which the re-program cable has been connected, then press OK
+Press the button Refer
+25/36
+HumaLyzer 3500 Service Manual
+Select the file to load (demo.mot)
+Press OK
+Press Setting...
+26/36
+Select Baud rate 57600 and Program intervals (ms) 40 then press OK
+The program will perform an automatic parameters settings (the operation will least few seconds)
+Press E.P.R...
+27/36
+HumaLyzer 3500 Service Manual
+Press OK
+Now the programming mode start, it will last some seconds and on the PC screen will appear the following:
+The programming time is displayed by the blue bar; at the end of programming the blue bar will be complete.
+28/36
+When the programming is complete this message will appear.
+Press OK then Exit in order to exit from the FlashSta program
+NOTE: the exit from the program is not immediate, a delay of few seconds will be needed.
+29/36
+HumaLyzer 3500 Service Manual
+8.1.2
+Diagram wiring for re-programming cable:
+Male Connector
+Female Connector
+Green
+White
+Blue
+1
+9
+1
+9
+Cable Switch
+30/36
+8.1.3
+Peripherals Firmware upgrade for HumaLyzer
+In order to install the Peripherals Firmware on HumaLyzer, follow the procedure stated below.
+8.1.4
+Program microprocessor (for XP)
+-
+Copy “flashprog16lx-v01l11.exe” on pc C:\Programs then install by double click.
+-
+Search on your PC “ C:\ Programs\ FUJITSU\ FUJITSU FLASH MCU Programmer\ FMC16LX, and copy
+“HM_002_13_Ott_2005.mhx ” file in this folder (remember to unzip first)
+-
+Search on your PC “C:\ Programs\ FUJITSU\ FUJITSU FLASH MCU Programmer\ FMC16LX\Flash.exe and
+open it by double click.
+-
+Find on your PC, with “Open” buttom, the file “HM_002_13_Ott_2005.mhx” with which you want re-
+program the instrument.
+-
+You will see:
+8.1.5
+Automatic Software Loading
+1.
+Select MB90F553A as CPU (Target Microcontroller)
+2.
+Select 16MHz as speed (Crystal Frequency)
+3.
+Select COM1 as PC port
+4.
+Connect serial cable to PC and instrument (COM1), select from: Set Environment button
+5.
+Open cover of HM and connect special adapter to J28 (see board), then connect serial cable to special
+adapter.
+6.
+Switch on Humalyzer
+7.
+Press FULL OPERATION (D+E+B+P) button
+8.
+A message will appear: “Press Reset Button”
+9.
+Push Reset button on the main board press OK in message then wait for the end of the automatic
+programming session, then press OK.
+10. Switch off Humalyzer
+11. Disconnect serial cable from the instrument
+12. Switch on Screen Master and check software
+In case of fail of the automatic software loading try the manual loading:
+HM_002_13_Ott_2005.mhx
+31/36
+HumaLyzer 3500 Service Manual
+8.1.6
+Scheme Serial PC
+8.1.7
+Special Adapter to J28
+1
+5
+6
+9
+1
+5
+FEMALE
+MALE
+6
+9
+5
+1
+6
+9
+Serial female
+AMP Mod. 4
+Female
+32/36
+8.2
+Methods Parameter Download and Upload
+In order to upgrade the instrument Assay parameters and make a backup of all the assay parameters present inside
+the HM memory, please follow step by step the bellow stated instruction.
+In order to operate these procedure the relevant program named SetupSmpDownload.exe must be installed in the
+PC (the PC must be RS232 connection equipped)
+-
+In order to install SetupSmpDownload.exe, copy it on desktop then bobble click and follow installation
+indications
+-
+After the installation is complete an icon will appear on desktop
+-
+Click on icon and the following program will appear:
+-
+Select Com by pressing Com button in case the PC has more than 1 com connection
+-
+Select File, open the file and select the .Met(this is Human GmbH assay parameters adaptation) or other.
+-
+In case no file is present in Select file option, go in C\HM\Method and copy the file
+33/36
+HumaLyzer 3500 Service Manual
+8.2.1
+Download Procedure
+This program allows to load in the HM automatically methods parameters from a PC via RS232.
+1) Connect one side of the re-program cable to one of the available PC COM sockets and the other side to
+the HM RS232 sockets
+2) Open the contact present on the re-program cable PC/instrument.
+3) Switch on the instrument.
+4) Start on PC the program SmpDownload.exe
+5) Select File, open the file and select the.Met file, than press OK button
+6) In the HM enter in service menu and select Download
+7) In the SmpDownload program press Download button
+8) The methods will be loaded into the Hm automatically
+8.2.2
+Upload Procedure
+The same program allows to record the methods parameter stored inside a HM in the PC via RS232.
+1) Connect one side of the re-program cable to one of the available PC COM sockets and the other side to
+the HM RS232 sockets
+2) Open the contact present on the re-program cable PC/instrument.
+3) Switch on the instrument.
+4) Start on PC the program SmpDownload.exe
+5) Press File name button and name a file where all the assays parameters present on HM will be stored in
+PC, then press Ok
+6) In the HM enter in service menu and select Upload
+7) In the SmpDownload program press Upload button
+8) The methods of HM will be loaded into the PC automatically and stored in C\HM\Method
+8.3
+Procedure for Touch Screen Replacement
+1.
+Switch off instrument, and disconnect power cord
+2.
+To remove the cover: Unscrew the 4 screws located under the instrument bottom
+3.
+Disconnect the plastic cover from instrument, to help operation open printer door, insert your finger
+under the cover and lift.
+4.
+Remove the 4 screws of the broken Touch screen by disconnecting JP8 and JP4 from Touch Screen Board.
+5.
+Connect JP8 ( no polarity of connection needed) and JP4 (the blue colour on flat must be looking outside
+board) of new Touch Screen.
+6.
+Lock the Touch Screen with 4 screws
+DANGER: WHEN THE INSTRUMENT IS SWITCHED
+ON PAY ATTENTION OF CONNECTION JP8, HIGH TENSION PRESENT 220V
+34/36
+JP4 connector
+To open lift both edge
+To close press both edge
+JP8
+JP4
+Flat Cable
+Touch Screen
+Insert the blue flat cable
+coming from the touch into
+the connector on the
+screen board
+Touch Screen Board
+35/36
+HumaLyzer 3500 Service Manual
+7.
+Connect a standard keyboard on PS2 socket located on the back of instrument.
+8.
+Switch on instrument and regulate contrast with RV1.
+9.
+Digit on Key board: “SRV”, the service menu will appear
+10. Move down with keyboard arrows and highlight CALIBRATION TS, then press ENTER
+11. Press F9 to start calibrate.
+NOTE: DO NOT PRESS TEST BUTTON FOR ANY REASON!
+12. with the tip of pencil touch the middle of the flashing indicator until it disappear
+13. Repeat this operation for all the indicator that will appear in sequence (16)
+14. Exit and the tip of the pencil must be in the same position of the indicator, try different position of
+touch, especially the one where you report the problem on keyboard.
+15. If touch screen is now calibrated press SAVE button or F10 (with external keyboard)
+16. If still touch screen is still needing adjustment repeat operation from point 1
+8.3.1
+Check Calibration
+Inside menu Touch with a pencil and an indicator will appear in correspondence of the pencil tip.
+JP4
+Flat Cable
+36/36
+The tip of the pencil must be in the same position of the indicator, try different position of touch, especially the one
+where you report the problem on keyboard.
+In case of not correspondence between pencil tip and arrow, repeat calibration procedure.
+HUMAN
+Gesellschaft für Biochemica und Diagnostica mbH
+| Max-Planck-Ring 21 · 65205 Wiesbaden · Germany
+| Tel.: +49 61 22/99 88-0 · Fax: +49 61 22/99 88-100
+| e-Mail: human@human.de · www.human.de
