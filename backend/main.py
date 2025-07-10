@@ -129,7 +129,6 @@ async def staff_dashboard(request: Request):
         return RedirectResponse("/", status_code=HTTP_302_FOUND)
     return templates.TemplateResponse("pharmalab.html", {"request": request, "user": user})
 
-
 from fastapi import UploadFile, File
 
 @app.get("/upload-manual", response_class=HTMLResponse)
@@ -186,6 +185,16 @@ async def jobcard_form(request: Request):
 @app.post("/submit-jobcard")
 async def submit_jobcard(request: Request):
     return await handle_jobcard(request)
+
+@app.get("/jobcards", response_class=HTMLResponse)
+async def view_jobcards(request: Request):
+    db = next(get_db())
+    jobcards = db.query(JobCard).all()
+    return templates.TemplateResponse("jobcards.html", {
+        "request": request,
+        "jobcards": jobcards
+    })
+
 
 @app.get("/serviceorder", response_class=HTMLResponse)
 async def serviceorder_form(request: Request):
