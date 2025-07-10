@@ -15,6 +15,8 @@ from backend.ai_assistant import ask_ai
 from backend.jobcard_handler import handle_jobcard
 from backend.serviceorder_handler import handle_serviceorder
 
+from backend.db.database import SessionLocal, get_db
+
 from passlib.context import CryptContext
 import os
 
@@ -217,7 +219,7 @@ async def ask_endpoint(request: Request):
         return JSONResponse({"response": f"Error: {str(e)}"})
 
 # ---------------------- Initialize DB ---------------------
-from backend.db.database import SessionLocal, get_db
+
 from backend.db.database import Base, engine
 import backend.db.models  # Ensure models are registered
 
