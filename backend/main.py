@@ -54,11 +54,24 @@ async def serviceorder_form(request: Request):
 async def submit_serviceorder(request: Request):
     return await handle_serviceorder(request)
 
+import os
+
 @app.post("/ask")
 async def ask_endpoint(request: Request):
     form = await request.form()
     query = form.get("query")
-    if not query:
-        return JSONResponse({"error": "No query provided"}, status_code=400)
-    response = await ask_ai(query)
+    instrument = form.get("instrument")
+
+    if not query or not instrument:
+        return JSONResponse({"error": "Missing query or instrument"}, status_code=400)
+
+    manual_path = f"backend/manuals/{instrument.lower()}.txt"
+    if not os.path.exists(manual_path):
+        return JSONResponse({"error": f"No manual found for {instrument}"}, status_code=404)
+
+    with open(manual_path, "r", encoding="utf-8") as f:
+        manual_content = f.read()
+
+    response = await ask_ai(query, manual_content)
     return JSONResponse({"response": response})
+
