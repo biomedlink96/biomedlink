@@ -1,38 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Job Card - Biomedlink</title>
+  <title>Submitted Job Cards</title>
+  <style>
+    table { border-collapse: collapse; width: 100%; }
+    th, td { padding: 8px 12px; border: 1px solid #ccc; }
+    th { background-color: #f2f2f2; }
+  </style>
 </head>
 <body>
-  <h2>Job Card Form</h2>
+  <h2>Submitted Job Cards</h2>
 
-  {% if success %}
-    <p style="color:green;">Job card submitted successfully!</p>
-    <ul>
-      <li><strong>Equipment Name:</strong> {{ equipment_name }}</li>
-      <li><strong>Maintenance Type:</strong> {{ maintenance_type }}</li>
-      <li><strong>Service Date:</strong> {{ service_date }}</li>
-      <li><strong>Spare Parts Used:</strong> {{ spare_parts_used }}</li>
-    </ul>
+  {% if jobcards %}
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Equipment Name</th>
+          <th>Maintenance Type</th>
+          <th>Date of Service</th>
+          <th>Spare Parts Used</th>
+          <th>File</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for job in jobcards %}
+        <tr>
+          <td>{{ job.id }}</td>
+          <td>{{ job.equipment_name }}</td>
+          <td>{{ job.maintenance_type }}</td>
+          <td>{{ job.date_of_service.strftime('%Y-%m-%d') }}</td>
+          <td>{{ job.spare_parts_used }}</td>
+          <td>
+            {% if job.file_path %}
+              <a href="/{{ job.file_path }}" target="_blank">Download</a>
+            {% else %}
+              N/A
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No job cards submitted yet.</p>
   {% endif %}
 
-  <form method="post" action="/submit-jobcard">
-    <label>Equipment Name:</label><br>
-    <input type="text" name="equipment_name" required><br><br>
-
-    <label>Maintenance Type:</label><br>
-    <select name="maintenance_type">
-      <option value="Preventive">Preventive</option>
-      <option value="Corrective">Corrective</option>
-    </select><br><br>
-
-    <label>Service Date:</label><br>
-    <input type="date" name="service_date" required><br><br>
-
-    <label>Spare Parts Used:</label><br>
-    <input type="text" name="spare_parts_used"><br><br>
-
-    <button type="submit">Submit Job Card</button>
-  </form>
+  <a href="/pharmalab">← Back to Dashboard</a>
 </body>
 </html>
