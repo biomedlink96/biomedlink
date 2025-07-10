@@ -73,9 +73,7 @@ async def ask_endpoint(request: Request):
         with open(manual_path, "r") as f:
             manual_content = f.read()
 
-        full_prompt = f"You are a biomedical assistant. Reference manual:\n{manual_content}\n\nUser question: {query}"
-
-        ai_response = await ask_ai(full_prompt)
+        ai_response = await ask_ai(query, manual_content)
         return JSONResponse({"response": ai_response})
     except Exception as e:
         return JSONResponse({"response": f"Error: {str(e)}"})
