@@ -78,3 +78,7 @@ async def ask_endpoint(request: Request):
     except Exception as e:
         return JSONResponse({"response": f"Error: {str(e)}"})
 
+from backend.db.database import Base, engine
+import backend.db.models  # Ensure models are registered
+
+Base.metadata.create_all(bind=engine)
