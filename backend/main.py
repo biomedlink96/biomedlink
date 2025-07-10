@@ -4,9 +4,9 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.status import HTTP_302_FOUND
 
-from ai_assistant import ask_ai
-from jobcard_handler import handle_jobcard
-from serviceorder_handler import handle_serviceorder
+from backend.ai_assistant import ask_ai
+from backend.jobcard_handler import handle_jobcard
+from backend.serviceorder_handler import handle_serviceorder
 
 app = FastAPI()
 
