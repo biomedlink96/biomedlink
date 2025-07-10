@@ -9,9 +9,35 @@
   <p><a href="/jobcard">Fill Job Card</a></p>
 
   <h3>Ask the AI Assistant</h3>
-  <form method="post" action="/ask">
-    <input type="text" name="query" placeholder="Ask about equipment..." required>
-    <button type="submit">Ask</button>
-  </form>
+ <form id="aiForm" method="post" action="/ask">
+  <label for="instrument">Select instrument:</label>
+  <select name="instrument" required>
+    <option value="humalyzer">Humalyzer</option>
+    <option value="humacount">HumaCount</option>
+    <!-- Add more as needed -->
+  </select>
+
+  <label for="query">Ask a question:</label>
+  <input type="text" name="query" required />
+
+  <button type="submit">Ask</button>
+</form>
+
+<div id="response"></div>
+
+<script>
+  const form = document.getElementById("aiForm");
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const res = await fetch("/ask", {
+      method: "POST",
+      body: formData
+    });
+    const data = await res.json();
+    document.getElementById("response").textContent = data.response;
+  };
+</script>
+
 </body>
 </html>
