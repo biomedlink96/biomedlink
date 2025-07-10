@@ -11,7 +11,7 @@ async def handle_jobcard(request: Request):
     form = await request.form()
     equipment_name = form.get("equipment_name")
     maintenance_type = form.get("maintenance_type")
-    date_of_service = form.get("date_of_service")
+    date_of_service = form.get("service_date")  # ← fix here
     spare_parts_used = form.get("spare_parts_used")
     file: UploadFile = form.get("file")
 
