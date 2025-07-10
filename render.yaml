@@ -9,4 +9,4 @@ services:
       - key: PYTHON_VERSION
         value: "3.10"
       - key: GROQ_API_KEY
-        value: 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
+        value: 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
