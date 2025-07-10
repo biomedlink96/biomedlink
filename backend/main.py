@@ -26,7 +26,7 @@ def get_db():
         db.close()
 
 # ---------------------- FastAPI App Setup ---------------------
-app = FastAPI()
+app = FastAPI(debug=True)
 templates = Jinja2Templates(directory="backend/templates")
 app.mount("/static", StaticFiles(directory="backend/static"), name="static")
 
