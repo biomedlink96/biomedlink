@@ -54,7 +54,7 @@ async def login(
 ):
     user = db.query(User).filter(User.email == email).first()
 
-    if not user or not pwd_context.verify(password, user.hashed_password):
+    if not user or not pwd_context.verify(password, user.password):
         return templates.TemplateResponse("index.html", {
             "request": request,
             "error": "Invalid email or password."
