@@ -75,6 +75,14 @@ async def login(
 
 
 
+from fastapi.responses import RedirectResponse
+
+@app.get("/logout")
+async def logout(request: Request):
+    request.session.clear()  # Clear the session
+    return RedirectResponse("/", status_code=HTTP_302_FOUND)
+
+
 # ---------------------- REGISTER ---------------------
 @app.get("/register", response_class=HTMLResponse)
 async def register_form(request: Request):
@@ -107,11 +115,19 @@ async def register_user(
 # ---------------------- DASHBOARDS ---------------------
 @app.get("/client", response_class=HTMLResponse)
 async def client_dashboard(request: Request):
-    return templates.TemplateResponse("client.html", {"request": request})
+    user = request.session.get("user")
+    if not user or user["role"] != "client":
+        return RedirectResponse("/", status_code=HTTP_302_FOUND)
+    return templates.TemplateResponse("client.html", {"request": request, "user": user})
+
 
 @app.get("/pharmalab", response_class=HTMLResponse)
 async def staff_dashboard(request: Request):
-    return templates.TemplateResponse("pharmalab.html", {"request": request})
+    user = request.session.get("user")
+    if not user or user["role"] != "staff":
+        return RedirectResponse("/", status_code=HTTP_302_FOUND)
+    return templates.TemplateResponse("pharmalab.html", {"request": request, "user": user})
+
 
 # ---------------------- FORMS ---------------------
 @app.get("/jobcard", response_class=HTMLResponse)
