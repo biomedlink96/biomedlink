@@ -1,0 +1,14 @@
+Flag H means "HGB blank is high, or no HGB blank, You should Repeat the blank measurement several times or replace HGB head.
+Flag B means the WBC blank is high or missing.You should make hardcleaning Run prime lyseseveral times and Repeat the blank measurement several or Possible lyse problem times 
+flag c and Flag C is RCB or WBC clogging Perform cleaning and Repeat the blank measurement several times or replace aperture
+Flag p Meaning PLT blank is high, or no PLT blank ,Run hard cleaning and repeat blank measurement several times or Check for diluent/system cleanliness or replace the diluent by opening a new tank.
+RBC blank is high, or no RBC blank Recommended Action Follow same procedure as flag p.
+error code 1000, This error means "Out of memory in %s". Fatal system or program error.Remedy: Check the COMB card and DimmPC module. Try a software upgrade.
+error 1003 mean?It means the data file is corrupt. A new file will be created.Remedy: Confirm creation when prompted.
+error 1101 ,It means the waste container is full.Remedy: Empty the waste container. If not full, check for a clog in the waste sensor line.
+error 1105, It means "Vacuum error" due to decreased vacuum during measurement.Remedy: Check pneumatic system: pump, tubing, sensor, fittings.
+error 1112 ,It means the sampler rotor was jammed.Remedy: Check the adapter and tube. Press the ✓ button.
+error 1201, It is a Fatal HGB error: HGB channel did not give a ready signal.Remedy: Replace the COMB board.
+error 1404 , It means "Paper width is too large".Remedy: Adjust printer paper size settings in the Settings/Printer setup submenu.
+error 1921 , error says: "%s sensor calibration failed."Reason: Empty reagent container or bubbles in tubes.Remedy: Replace with a full container and recalibrate.
+error 1922 ,"Blood detector calibration failed."Reason: Empty diluent or bubbles in sample needle.Remedy: Replace container, recalibrate, check tubing.
