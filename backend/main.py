@@ -217,6 +217,7 @@ async def ask_endpoint(request: Request):
         return JSONResponse({"response": f"Error: {str(e)}"})
 
 # ---------------------- Initialize DB ---------------------
+from backend.db.database import SessionLocal, get_db
 from backend.db.database import Base, engine
 import backend.db.models  # Ensure models are registered
 
