@@ -14,10 +14,12 @@ class User(Base):
 class JobCard(Base):
     __tablename__ = "jobcards"
     id = Column(Integer, primary_key=True, index=True)
-    equipment = Column(String)
+    equipment_name = Column(String)
     maintenance_type = Column(String)
-    date = Column(DateTime, default=datetime.utcnow)
-    notes = Column(Text)
+    date_of_service = Column(DateTime, default=datetime.utcnow)
+    spare_parts_used = Column(Text)
+    file_path = Column(String)
+
 
 # ---------------- ServiceOrder Model ----------------
 class ServiceOrder(Base):
