@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Service Order - Biomedlink</title>
+</head>
+<body>
+  <h2>Service Order Form</h2>
+
+  {% if success %}
+    <p style="color:green;">Service order submitted successfully!</p>
+    <ul>
+      <li><strong>Equipment Name:</strong> {{ equipment_name }}</li>
+      <li><strong>Issue Reported:</strong> {{ issue_reported }}</li>
+      <li><strong>Service Date:</strong> {{ service_date }}</li>
+      <li><strong>Action Taken:</strong> {{ action_taken }}</li>
+    </ul>
+  {% endif %}
+
+  <form method="post" action="/submit-serviceorder">
+    <label>Equipment Name:</label><br>
+    <input type="text" name="equipment_name" required><br><br>
+
+    <label>Issue Reported:</label><br>
+    <input type="text" name="issue_reported" required><br><br>
+
+    <label>Service Date:</label><br>
+    <input type="date" name="service_date" required><br><br>
+
+    <label>Action Taken:</label><br>
+    <input type="text" name="action_taken" required><br><br>
+
+    <button type="submit">Submit Service Order</button>
+  </form>
+</body>
+</html>
