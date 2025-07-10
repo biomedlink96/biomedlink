@@ -42,7 +42,6 @@ async def index(request: Request):
 # ---------------------- LOGIN ---------------------
 from fastapi import Depends, Request, Form
 from fastapi.responses import RedirectResponse
-from backend.db.database import get_db
 
 @app.post("/login")
 async def login(
