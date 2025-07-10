@@ -36,18 +36,34 @@ async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 # ---------------------- LOGIN ---------------------
-@app.post("/login")
-async def login(request: Request, email: str = Form(...), password: str = Form(...)):
-    db = next(get_db())
-    user = db.query(User).filter(User.email == email).first()
+from fastapi import Depends
+from sqlalchemy.orm import Session
 
-    if not user or not pwd_context.verify(password, user.hashed_password):
+@app.post("/login")
+async def login(
+    request: Request,
+    email: str = Form(...),
+    password: str = Form(...),
+    db: Session = Depends(get_db)
+):
+    user = db.query(User).filter(User.email == email).first()
+    if not user or not pwd_context.verify(password, user.password):
         return templates.TemplateResponse("index.html", {
             "request": request,
-            "error": "Invalid login"
+            "error": "Invalid email or password."
         })
 
-    return RedirectResponse("/client" if user.role == "client" else "/pharmalab", status_code=HTTP_302_FOUND)
+    # Redirect based on user role
+    if user.role == "client":
+        return RedirectResponse("/client", status_code=HTTP_302_FOUND)
+    elif user.role == "staff":
+        return RedirectResponse("/pharmalab", status_code=HTTP_302_FOUND)
+    else:
+        return templates.TemplateResponse("index.html", {
+            "request": request,
+            "error": "Unknown user role."
+        })
+
 
 # ---------------------- REGISTER ---------------------
 @app.get("/register", response_class=HTMLResponse)
