@@ -71,7 +71,7 @@ async def register_user(
         })
 
     hashed_password = pwd_context.hash(password)
-    new_user = User(email=email, hashed_password=hashed_password, role=role)
+    new_user = User(email=email, password=hashed_password, role=role)
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
