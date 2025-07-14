@@ -35,8 +35,8 @@ app = FastAPI(debug=True)
 app.add_middleware(SessionMiddleware, secret_key=secrets.token_hex(32))
 templates = Jinja2Templates(directory="backend/templates")
 app.mount("/static", StaticFiles(directory="backend/static"), name="static")
+os.makedirs("uploaded_files", exist_ok=True)
 app.mount("/uploaded_files", StaticFiles(directory="uploaded_files"), name="uploaded_files")
-
 # ---------------------- Home Page ---------------------
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
