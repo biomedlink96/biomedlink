@@ -199,6 +199,16 @@ async def jobcard_form(request: Request):
 async def submit_jobcard(request: Request):
     return await handle_jobcard(request)
 
+@app.get("/jobcard", response_class=HTMLResponse)
+async def jobcard_form(request: Request):
+    db = next(get_db())
+    user_id = request.session.get("user_id")  # 👈 current user
+    jobcards = db.query(JobCard).filter(JobCard.user_id == user_id).all()
+    return templates.TemplateResponse("jobcard.html", {
+        "request": request,
+        "jobcards": jobcards
+    })
+
 @app.post("/delete-jobcard/{jobcard_id}")
 async def delete_jobcard(jobcard_id: int):
     db = next(get_db())
@@ -254,6 +264,25 @@ async def serviceorder_form(request: Request):
 @app.post("/submit-serviceorder")
 async def submit_serviceorder(request: Request):
     return await handle_serviceorder(request)
+
+@app.get("/serviceorder", response_class=HTMLResponse)
+async def serviceorder_form(request: Request):
+    db = next(get_db())
+    user_id = request.session.get("user_id")
+    serviceorders = db.query(ServiceOrder).filter(ServiceOrder.user_id == user_id).all()
+    return templates.TemplateResponse("serviceorder.html", {
+        "request": request,
+        "serviceorders": serviceorders
+    })
+
+@app.post("/delete-serviceorder/{serviceorder_id}")
+async def delete_serviceorder(serviceorder_id: int):
+    db = next(get_db())
+    serviceorder = db.query(serviceorder).filter(serviceorder.id == serviceorder_id).first()
+    if serviceorder:
+        db.delete(serviceorder)
+        db.commit()
+    return RedirectResponse("/serviceorder", status_code=302)
 
 @app.get("/download-serviceorders-pdf")
 def download_serviceorders_pdf():
