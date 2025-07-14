@@ -8,4 +8,5 @@ sqlalchemy
 passlib[bcrypt]
 psycopg2-binary
 itsdangerous
+reportlab
 
