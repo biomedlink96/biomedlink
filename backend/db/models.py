@@ -45,7 +45,7 @@ class ServiceOrder(Base):
 
     # 👇 Add this relationship to access user info
     user = relationship("User", back_populates="serviceorders")
-✅ Also update the User model:
+# ✅ Also update the User model:
 If not done yet, ensure your User model includes this:
 
 python
