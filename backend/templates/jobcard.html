@@ -10,36 +10,6 @@
 </head>
 <body>
 
-  <h2>Job Card Form</h2>
-
-  {% if success %}
-    <p style="color:green;">Job card submitted successfully!</p>
-    <ul>
-      <li><strong>Equipment Name:</strong> {{ equipment_name }}</li>
-      <li><strong>Maintenance Type:</strong> {{ maintenance_type }}</li>
-      <li><strong>Service Date:</strong> {{ service_date }}</li>
-      <li><strong>Spare Parts Used:</strong> {{ spare_parts_used }}</li>
-    </ul>
-  {% endif %}
-
-  <form method="post" action="/submit-jobcard">
-    <label>Equipment Name:</label><br>
-    <input type="text" name="equipment_name" required><br><br>
-
-    <label>Maintenance Type:</label><br>
-    <select name="maintenance_type">
-      <option value="Preventive">Preventive</option>
-      <option value="Corrective">Corrective</option>
-    </select><br><br>
-
-    <label>Service Date:</label><br>
-    <input type="date" name="service_date" required><br><br>
-
-    <label>Spare Parts Used:</label><br>
-    <input type="text" name="spare_parts_used"><br><br>
-
-    <button type="submit">Submit Job Card</button>
-  </form>
   <h2>Submitted Job Cards</h2>
 
   {% if jobcards %}
