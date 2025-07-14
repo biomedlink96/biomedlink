@@ -53,17 +53,22 @@
         <tr>
           <td>{{ job.id }}</td>
           <td>{{ job.equipment_name }}</td>
-          <td>{{ job.maintenance_type }}</td>
-          <td>{{ job.date_of_service.strftime('%Y-%m-%d') }}</td>
-          <td>{{ job.spare_parts_used }}</td>
-          <td>
+           <td>{{ job.maintenance_type }}</td>
+           <td>{{ job.date_of_service.strftime('%Y-%m-%d') }}</td>
+           <td>{{ job.spare_parts_used }}</td>
+           <td>
             {% if job.file_path %}
-              <a href="/{{ job.file_path }}" target="_blank">Download</a>
-            {% else %}
-              N/A
-            {% endif %}
-          </td>
-        </tr>
+            <a href="/{{ job.file_path }}" target="_blank">Download</a>
+           {% else %}
+            N/A
+           {% endif %}
+         </td>
+      <td>
+    <form method="post" action="/delete-jobcard/{{ job.id }}" onsubmit="return confirm('Are you sure?');">
+      <button type="submit" style="color:red;">Delete</button>
+    </form>
+  </td>
+</tr>
         {% endfor %}
       </tbody>
     </table>
