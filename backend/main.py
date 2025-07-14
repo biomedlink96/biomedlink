@@ -181,20 +181,16 @@ async def upload_manual(
 # ---------------------- FORMS ---------------------
 @app.get("/jobcard", response_class=HTMLResponse)
 async def jobcard_form(request: Request):
-    return templates.TemplateResponse("jobcard.html", {"request": request})
+    db = next(get_db())
+    jobcards = db.query(JobCard).all()
+    return templates.TemplateResponse("jobcard.html", {
+        "request": request,
+        "jobcards": jobcards
+    })
 
 @app.post("/submit-jobcard")
 async def submit_jobcard(request: Request):
     return await handle_jobcard(request)
-
-@app.get("/jobcards", response_class=HTMLResponse)
-async def view_jobcards(request: Request):
-    db = next(get_db())
-    jobcards = db.query(JobCard).all()
-    return templates.TemplateResponse("jobcards.html", {
-        "request": request,
-        "jobcards": jobcards
-    })
 
 
 @app.get("/serviceorder", response_class=HTMLResponse)
