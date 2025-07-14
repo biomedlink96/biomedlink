@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Service Order - Biomedlink</title>
+  <title>Service Order Form</title>
   <style>
-    table { border-collapse: collapse; width: 100%; }
-    th, td { padding: 8px 12px; border: 1px solid #ccc; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
     th { background-color: #f2f2f2; }
   </style>
 </head>
@@ -12,21 +12,19 @@
   <h2>Service Order Form</h2>
 
   <form method="post" action="/submit-serviceorder">
-    <label>Issue:</label><br>
-    <textarea name="issue" rows="3" cols="50" required></textarea><br><br>
+    <label>Issue Description:</label><br>
+    <textarea name="issue" rows="3" cols="40" required></textarea><br><br>
 
     <label>Spare Parts Used:</label><br>
-    <input type="text" name="spare_parts"><br><br>
+    <textarea name="spare_parts" rows="2" cols="40"></textarea><br><br>
 
-    <label>Date of Service:</label><br>
+    <label>Date:</label><br>
     <input type="date" name="date" required><br><br>
 
     <button type="submit">Submit Service Order</button>
   </form>
 
-  <hr>
-  <h2>Submitted Service Orders</h2>
-
+  <h3>Submitted Service Orders</h3>
   {% if serviceorders %}
     <table>
       <thead>
@@ -38,12 +36,12 @@
         </tr>
       </thead>
       <tbody>
-        {% for order in serviceorders %}
+        {% for so in serviceorders %}
         <tr>
-          <td>{{ order.id }}</td>
-          <td>{{ order.issue }}</td>
-          <td>{{ order.spare_parts or 'N/A' }}</td>
-          <td>{{ order.date.strftime('%Y-%m-%d') }}</td>
+          <td>{{ so.id }}</td>
+          <td>{{ so.issue }}</td>
+          <td>{{ so.spare_parts }}</td>
+          <td>{{ so.date.strftime('%Y-%m-%d') }}</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -52,6 +50,6 @@
     <p>No service orders submitted yet.</p>
   {% endif %}
 
-  <p><a href="/pharmalab">← Back to Dashboard</a></p>
+  <br><a href="/pharmalab">← Back to Dashboard</a>
 </body>
 </html>
