@@ -16,6 +16,7 @@ class User(Base):
 
     jobcards = relationship("JobCard", back_populates="user")
 
+
 # ---------------- JobCard Model ----------------
 class JobCard(Base):
     __tablename__ = "jobcards"
