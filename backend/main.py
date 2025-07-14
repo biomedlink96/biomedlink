@@ -86,10 +86,32 @@ async def login(
 
 from fastapi.responses import RedirectResponse
 
+@app.get("/admin/users", response_class=HTMLResponse)
+async def admin_users(request: Request):
+    db = next(get_db())
+    users = db.query(User).all()
+    return templates.TemplateResponse("admin_users.html", {
+        "request": request,
+        "users": users
+    })
+
 @app.get("/logout")
 async def logout(request: Request):
     request.session.clear()  # Clear the session
     return RedirectResponse("/", status_code=HTTP_302_FOUND)
+
+from fastapi import status
+from fastapi.responses import RedirectResponse
+
+@app.post("/admin/users/delete/{user_id}")
+async def delete_user(user_id: int):
+    db = next(get_db())
+    user = db.query(User).filter(User.id == user_id).first()
+    if user:
+        db.delete(user)
+        db.commit()
+    return RedirectResponse(url="/admin/users", status_code=status.HTTP_302_FOUND)
+
 
 
 # ---------------------- REGISTER ---------------------
