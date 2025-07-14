@@ -16,6 +16,10 @@ from backend.jobcard_handler import handle_jobcard
 from backend.serviceorder_handler import handle_serviceorder
 
 from backend.db.database import SessionLocal, get_db
+from fastapi.responses import FileResponse
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+
 
 from passlib.context import CryptContext
 import os
@@ -191,6 +195,37 @@ async def jobcard_form(request: Request):
 @app.post("/submit-jobcard")
 async def submit_jobcard(request: Request):
     return await handle_jobcard(request)
+
+@app.get("/download-jobcards", response_class=FileResponse)
+def download_jobcards():
+    db = next(get_db())
+    jobcards = db.query(JobCard).all()
+
+    pdf_path = "jobcards_report.pdf"
+    c = canvas.Canvas(pdf_path, pagesize=letter)
+    width, height = letter
+
+    y = height - 50
+    c.setFont("Helvetica", 12)
+    c.drawString(100, y, "BiomedLink - Job Cards Report")
+    y -= 30
+
+    for job in jobcards:
+        if y < 100:
+            c.showPage()
+            y = height - 50
+
+        c.drawString(50, y, f"ID: {job.id}")
+        c.drawString(120, y, f"Equipment: {job.equipment_name}")
+        y -= 20
+        c.drawString(120, y, f"Type: {job.maintenance_type}, Date: {job.date_of_service.strftime('%Y-%m-%d')}")
+        y -= 20
+        c.drawString(120, y, f"Spare Parts: {job.spare_parts_used or 'None'}")
+        y -= 30
+
+    c.save()
+    return FileResponse(pdf_path, media_type='application/pdf', filename="jobcards_report.pdf")
+
 
 
 @app.get("/serviceorder", response_class=HTMLResponse)
