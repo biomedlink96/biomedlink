@@ -1,22 +1,23 @@
-from fastapi import Request
-from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
+from fastapi import Request, Form
+from sqlalchemy.orm import Session
+from backend.db.database import get_db
+from backend.db.models import ServiceOrder
+from datetime import datetime
+from fastapi.responses import RedirectResponse
 
-templates = Jinja2Templates(directory="backend/templates")
-
-async def handle_serviceorder(request: Request) -> HTMLResponse:
+async def handle_serviceorder(request: Request):
     form = await request.form()
-    equipment_name = form.get("equipment_name")
-    issue_reported = form.get("issue_reported")
-    service_date = form.get("service_date")
-    action_taken = form.get("action_taken")
+    issue = form.get("issue")
+    spare_parts = form.get("spare_parts")
+    date_str = form.get("date")
 
-    # In v1, just display confirmation message
-    return templates.TemplateResponse("serviceorder.html", {
-        "request": request,
-        "success": True,
-        "equipment_name": equipment_name,
-        "issue_reported": issue_reported,
-        "service_date": service_date,
-        "action_taken": action_taken
-    })
+    db: Session = next(get_db())
+    serviceorder = ServiceOrder(
+        issue=issue,
+        spare_parts=spare_parts,
+        date=datetime.strptime(date_str, "%Y-%m-%d")
+    )
+    db.add(serviceorder)
+    db.commit()
+
+    return RedirectResponse("/serviceorder", status_code=302)
