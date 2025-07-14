@@ -20,6 +20,9 @@ from fastapi.responses import FileResponse
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 
+from reportlab.lib.pagesizes import A4
+import io
+
 
 from passlib.context import CryptContext
 import os
@@ -241,6 +244,33 @@ async def serviceorder_form(request: Request):
 @app.post("/submit-serviceorder")
 async def submit_serviceorder(request: Request):
     return await handle_serviceorder(request)
+
+@app.get("/download-serviceorders-pdf")
+def download_serviceorders_pdf():
+    db = next(get_db())
+    serviceorders = db.query(ServiceOrder).all()
+
+    buffer = io.BytesIO()
+    pdf = canvas.Canvas(buffer, pagesize=A4)
+    width, height = A4
+
+    pdf.setFont("Helvetica", 12)
+    y = height - 50
+    pdf.drawString(50, y, "Submitted Service Orders")
+    y -= 30
+
+    for order in serviceorders:
+        pdf.drawString(50, y, f"Issue: {order.issue}")
+        pdf.drawString(250, y, f"Spare Parts: {order.spare_parts}")
+        pdf.drawString(450, y, f"Date: {order.date.strftime('%Y-%m-%d')}")
+        y -= 20
+        if y < 50:
+            pdf.showPage()
+            y = height - 50
+
+    pdf.save()
+    buffer.seek(0)
+    return FileResponse(buffer, media_type="application/pdf", filename="serviceorders.pdf")
 
 # ---------------------- AI Assistant ---------------------
 @app.post("/ask")
