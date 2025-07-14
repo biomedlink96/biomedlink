@@ -15,13 +15,14 @@ async def handle_jobcard(request: Request):
     spare_parts_used = form.get("spare_parts_used")
     file: UploadFile = form.get("file")
 
-    file_path = ""
-    if file:
-        upload_dir = "uploaded_files"
-        os.makedirs(upload_dir, exist_ok=True)
-        file_path = os.path.join(upload_dir, file.filename)
-        with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
+   file_path = ""
+if file and file.filename and file.filename.strip() != "":
+    upload_dir = "uploaded_files"
+    os.makedirs(upload_dir, exist_ok=True)
+    file_path = os.path.join(upload_dir, file.filename)
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
 
     db: Session = next(get_db())
     jobcard = JobCard(
