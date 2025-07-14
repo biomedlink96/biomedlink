@@ -9,4 +9,5 @@ passlib[bcrypt]
 psycopg2-binary
 itsdangerous
 reportlab
+alembic>=1.13.1
 
