@@ -9,7 +9,7 @@ import secrets
 
 from sqlalchemy.orm import Session
 from backend.db.database import SessionLocal
-from backend.db.models import User
+from backend.db.models import User, JobCard
 
 from backend.ai_assistant import ask_ai
 from backend.jobcard_handler import handle_jobcard
