@@ -237,6 +237,7 @@ async def serviceorder_form(request: Request):
         "serviceorders": serviceorders
     })
 
+
 @app.post("/submit-serviceorder")
 async def submit_serviceorder(request: Request):
     return await handle_serviceorder(request)
