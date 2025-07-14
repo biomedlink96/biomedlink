@@ -2,34 +2,56 @@
 <html>
 <head>
   <title>Service Order - Biomedlink</title>
+  <style>
+    table { border-collapse: collapse; width: 100%; }
+    th, td { padding: 8px 12px; border: 1px solid #ccc; }
+    th { background-color: #f2f2f2; }
+  </style>
 </head>
 <body>
   <h2>Service Order Form</h2>
 
-  {% if success %}
-    <p style="color:green;">Service order submitted successfully!</p>
-    <ul>
-      <li><strong>Equipment Name:</strong> {{ equipment_name }}</li>
-      <li><strong>Issue Reported:</strong> {{ issue_reported }}</li>
-      <li><strong>Service Date:</strong> {{ service_date }}</li>
-      <li><strong>Action Taken:</strong> {{ action_taken }}</li>
-    </ul>
-  {% endif %}
-
   <form method="post" action="/submit-serviceorder">
-    <label>Equipment Name:</label><br>
-    <input type="text" name="equipment_name" required><br><br>
+    <label>Issue:</label><br>
+    <textarea name="issue" rows="3" cols="50" required></textarea><br><br>
 
-    <label>Issue Reported:</label><br>
-    <input type="text" name="issue_reported" required><br><br>
+    <label>Spare Parts Used:</label><br>
+    <input type="text" name="spare_parts"><br><br>
 
-    <label>Service Date:</label><br>
-    <input type="date" name="service_date" required><br><br>
-
-    <label>Action Taken:</label><br>
-    <input type="text" name="action_taken" required><br><br>
+    <label>Date of Service:</label><br>
+    <input type="date" name="date" required><br><br>
 
     <button type="submit">Submit Service Order</button>
   </form>
+
+  <hr>
+  <h2>Submitted Service Orders</h2>
+
+  {% if serviceorders %}
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Issue</th>
+          <th>Spare Parts</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in serviceorders %}
+        <tr>
+          <td>{{ order.id }}</td>
+          <td>{{ order.issue }}</td>
+          <td>{{ order.spare_parts or 'N/A' }}</td>
+          <td>{{ order.date.strftime('%Y-%m-%d') }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No service orders submitted yet.</p>
+  {% endif %}
+
+  <p><a href="/pharmalab">← Back to Dashboard</a></p>
 </body>
 </html>
