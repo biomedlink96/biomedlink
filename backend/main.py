@@ -199,6 +199,16 @@ async def jobcard_form(request: Request):
 async def submit_jobcard(request: Request):
     return await handle_jobcard(request)
 
+@app.post("/delete-jobcard/{jobcard_id}")
+async def delete_jobcard(jobcard_id: int):
+    db = next(get_db())
+    jobcard = db.query(JobCard).filter(JobCard.id == jobcard_id).first()
+    if jobcard:
+        db.delete(jobcard)
+        db.commit()
+    return RedirectResponse("/jobcard", status_code=302)
+
+
 @app.get("/download-jobcards", response_class=FileResponse)
 def download_jobcards():
     db = next(get_db())
