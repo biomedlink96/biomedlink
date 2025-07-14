@@ -9,7 +9,7 @@ import secrets
 
 from sqlalchemy.orm import Session
 from backend.db.database import SessionLocal
-from backend.db.models import User, JobCard
+from backend.db.models import User, JobCard, ServiceOrder
 
 from backend.ai_assistant import ask_ai
 from backend.jobcard_handler import handle_jobcard
@@ -230,7 +230,12 @@ def download_jobcards():
 
 @app.get("/serviceorder", response_class=HTMLResponse)
 async def serviceorder_form(request: Request):
-    return templates.TemplateResponse("serviceorder.html", {"request": request})
+    db = next(get_db())
+    serviceorders = db.query(ServiceOrder).all()
+    return templates.TemplateResponse("serviceorder.html", {
+        "request": request,
+        "serviceorders": serviceorders
+    })
 
 @app.post("/submit-serviceorder")
 async def submit_serviceorder(request: Request):
