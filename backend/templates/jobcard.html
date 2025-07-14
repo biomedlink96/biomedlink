@@ -3,14 +3,14 @@
 <head>
   <title>Job Card - Biomedlink</title>
   <style>
-    table { border-collapse: collapse; width: 100%; margin-top: 40px; }
+    table { border-collapse: collapse; width: 100%; }
     th, td { padding: 8px 12px; border: 1px solid #ccc; }
     th { background-color: #f2f2f2; }
   </style>
 </head>
 <body>
-  <h2>Job Card Form</h2>
 
+  <h2>Job Card Form</h2>
   <form method="post" action="/submit-jobcard" enctype="multipart/form-data">
     <label>Equipment Name:</label><br>
     <input type="text" name="equipment_name" required><br><br>
@@ -27,14 +27,15 @@
     <label>Spare Parts Used:</label><br>
     <input type="text" name="spare_parts_used"><br><br>
 
-    <label>Upload File (optional):</label><br>
+    <label>Upload File:</label><br>
     <input type="file" name="file"><br><br>
 
     <button type="submit">Submit Job Card</button>
   </form>
 
-  <h2>Submitted Job Cards</h2>
+  <hr>
 
+  <h2>Submitted Job Cards</h2>
   {% if jobcards %}
     <table>
       <thead>
