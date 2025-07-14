@@ -1,14 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Submitted Job Cards</title>
+  <title>Job Card - Biomedlink</title>
   <style>
-    table { border-collapse: collapse; width: 100%; }
+    table { border-collapse: collapse; width: 100%; margin-top: 40px; }
     th, td { padding: 8px 12px; border: 1px solid #ccc; }
     th { background-color: #f2f2f2; }
   </style>
 </head>
 <body>
+  <h2>Job Card Form</h2>
+
+  <form method="post" action="/submit-jobcard" enctype="multipart/form-data">
+    <label>Equipment Name:</label><br>
+    <input type="text" name="equipment_name" required><br><br>
+
+    <label>Maintenance Type:</label><br>
+    <select name="maintenance_type">
+      <option value="Preventive">Preventive</option>
+      <option value="Corrective">Corrective</option>
+    </select><br><br>
+
+    <label>Service Date:</label><br>
+    <input type="date" name="date_of_service" required><br><br>
+
+    <label>Spare Parts Used:</label><br>
+    <input type="text" name="spare_parts_used"><br><br>
+
+    <label>Upload File (optional):</label><br>
+    <input type="file" name="file"><br><br>
+
+    <button type="submit">Submit Job Card</button>
+  </form>
 
   <h2>Submitted Job Cards</h2>
 
@@ -47,6 +70,7 @@
     <p>No job cards submitted yet.</p>
   {% endif %}
 
+  <br>
   <a href="/pharmalab">← Back to Dashboard</a>
 </body>
 </html>
