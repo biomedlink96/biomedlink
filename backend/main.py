@@ -186,6 +186,7 @@ async def upload_manual(
 
 
 # ---------------------- FORMS ---------------------
+templates = Jinja2Templates(directory="templates")
 @app.get("/jobcard", response_class=HTMLResponse)
 async def jobcard_form(request: Request):
     db = next(get_db())
