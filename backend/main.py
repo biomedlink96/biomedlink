@@ -60,6 +60,8 @@ async def login(
     password: str = Form(...),
     db: Session = Depends(get_db)
 ):
+
+
     user = db.query(User).filter(User.email == email).first()
 
     if not user or not pwd_context.verify(password, user.password):
@@ -88,7 +90,9 @@ request.session["user"] = {
             "error": "Unknown user role."
         })
 
-
+@app.get("/login", response_class=HTMLResponse)
+async def login_get(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 from fastapi.responses import RedirectResponse
 
@@ -233,7 +237,9 @@ async def submit_jobcard(request: Request):
 @app.get("/jobcard", response_class=HTMLResponse)
 async def jobcard_form(request: Request):
     db = next(get_db())
-    user_id = request.session.get("user_id")  # 👈 current user
+    user = request.session.get("user")
+user_id = user["user_id"] if user else None
+  # 👈 current user
     jobcards = db.query(JobCard).filter(JobCard.user_id == user_id).all()
     return templates.TemplateResponse("jobcard.html", {
         "request": request,
@@ -299,7 +305,9 @@ async def submit_serviceorder(request: Request):
 @app.get("/serviceorder", response_class=HTMLResponse)
 async def serviceorder_form(request: Request):
     db = next(get_db())
-    user_id = request.session.get("user_id")
+    user = request.session.get("user")
+user_id = user["user_id"] if user else None
+
     serviceorders = db.query(ServiceOrder).filter(ServiceOrder.user_id == user_id).all()
     return templates.TemplateResponse("serviceorder.html", {
         "request": request,
