@@ -9,6 +9,7 @@ from fastapi.responses import RedirectResponse
 
 async def handle_jobcard(request: Request):
     form = await request.form()
+    print("Session:", request.session)
     equipment_name = form.get("equipment_name")
     maintenance_type = form.get("maintenance_type")
     date_of_service = form.get("date_of_service")
@@ -43,8 +44,5 @@ async def handle_jobcard(request: Request):
     return RedirectResponse("/jobcard", status_code=302)
 
 
-print("Session:", request.session)
-print("Equipment:", equipment_name)
-print("Date:", date_of_service)
-print("User ID:", user_id)
+
 
