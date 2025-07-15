@@ -69,7 +69,13 @@ async def login(
         })
 
     # ✅ Store session
-    request.session["user"] = {"email": user.email, "role": user.role}
+    # ✅ Store session (include user_id)
+request.session["user"] = {
+    "email": user.email,
+    "role": user.role,
+    "user_id": user.id
+}
+
 
     # ✅ Redirect by role
     if user.role == "client":
