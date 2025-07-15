@@ -1,58 +1,49 @@
-from fastapi import FastAPI, Request, Form
-from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
+from fastapi import FastAPI, Request, Form, UploadFile, File, Depends
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.status import HTTP_302_FOUND
-
 from starlette.middleware.sessions import SessionMiddleware
-import secrets
 
+import secrets, os, io, shutil
+from datetime import datetime
 from sqlalchemy.orm import Session
-from backend.db.database import SessionLocal
-from backend.db.models import User, JobCard, ServiceOrder
 
+from passlib.context import CryptContext
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter, A4
+
+from backend.db.database import SessionLocal, get_db, Base, engine
+from backend.db.models import User, JobCard, ServiceOrder
 from backend.ai_assistant import ask_ai
 from backend.jobcard_handler import handle_jobcard
 from backend.serviceorder_handler import handle_serviceorder
 
-from backend.db.database import SessionLocal, get_db
-from fastapi.responses import FileResponse
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
+import backend.db.models  # Ensure models are registered
 
-from reportlab.lib.pagesizes import A4
-import io
+# ---------------------- App Setup ---------------------
+app = FastAPI(debug=True)
+app.add_middleware(SessionMiddleware, secret_key=secrets.token_hex(32))
 
+templates = Jinja2Templates(directory="backend/templates")
+app.mount("/static", StaticFiles(directory="backend/static"), name="static")
 
-from passlib.context import CryptContext
-import os
+os.makedirs("uploaded_files", exist_ok=True)
+app.mount("/uploaded_files", StaticFiles(directory="uploaded_files"), name="uploaded_files")
 
 # ---------------------- Password Hashing ---------------------
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-# ---------------------- FastAPI App Setup ---------------------
-app = FastAPI(debug=True)
-app.add_middleware(SessionMiddleware, secret_key=secrets.token_hex(32))
-templates = Jinja2Templates(directory="backend/templates")
-app.mount("/static", StaticFiles(directory="backend/static"), name="static")
-os.makedirs("uploaded_files", exist_ok=True)
-app.mount("/uploaded_files", StaticFiles(directory="uploaded_files"), name="uploaded_files")
-# ---------------------- Home Page ---------------------
+# ---------------------- Home ---------------------
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-# ---------------------- LOGIN ---------------------
-from fastapi import Depends, Request, Form
-from fastapi.responses import RedirectResponse
+@app.get("/login", response_class=HTMLResponse)
+async def login_get(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
+# ---------------------- LOGIN ---------------------
 @app.post("/login")
 async def login(
     request: Request,
@@ -60,8 +51,6 @@ async def login(
     password: str = Form(...),
     db: Session = Depends(get_db)
 ):
-
-
     user = db.query(User).filter(User.email == email).first()
 
     if not user or not pwd_context.verify(password, user.password):
@@ -70,16 +59,12 @@ async def login(
             "error": "Invalid email or password."
         })
 
-    # ✅ Store session
-    # ✅ Store session (include user_id)
-request.session["user"] = {
-    "email": user.email,
-    "role": user.role,
-    "user_id": user.id
-}
+    request.session["user"] = {
+        "email": user.email,
+        "role": user.role,
+        "user_id": user.id
+    }
 
-
-    # ✅ Redirect by role
     if user.role == "client":
         return RedirectResponse("/client", status_code=HTTP_302_FOUND)
     elif user.role == "staff":
@@ -90,39 +75,11 @@ request.session["user"] = {
             "error": "Unknown user role."
         })
 
-@app.get("/login", response_class=HTMLResponse)
-async def login_get(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
-
-from fastapi.responses import RedirectResponse
-
-@app.get("/admin/users", response_class=HTMLResponse)
-async def admin_users(request: Request):
-    db = next(get_db())
-    users = db.query(User).all()
-    return templates.TemplateResponse("admin_users.html", {
-        "request": request,
-        "users": users
-    })
-
+# ---------------------- LOGOUT ---------------------
 @app.get("/logout")
 async def logout(request: Request):
-    request.session.clear()  # Clear the session
+    request.session.clear()
     return RedirectResponse("/", status_code=HTTP_302_FOUND)
-
-from fastapi import status
-from fastapi.responses import RedirectResponse
-
-@app.post("/admin/users/delete/{user_id}")
-async def delete_user(user_id: int):
-    db = next(get_db())
-    user = db.query(User).filter(User.id == user_id).first()
-    if user:
-        db.delete(user)
-        db.commit()
-    return RedirectResponse(url="/admin/users", status_code=status.HTTP_302_FOUND)
-
-
 
 # ---------------------- REGISTER ---------------------
 @app.get("/register", response_class=HTMLResponse)
@@ -137,7 +94,6 @@ async def register_user(
     role: str = Form(...),
 ):
     db = next(get_db())
-
     existing_user = db.query(User).filter(User.email == email).first()
     if existing_user:
         return templates.TemplateResponse("register.html", {
@@ -149,8 +105,6 @@ async def register_user(
     new_user = User(email=email, password=hashed_password, role=role)
     db.add(new_user)
     db.commit()
-    db.refresh(new_user)
-
     return RedirectResponse("/", status_code=HTTP_302_FOUND)
 
 # ---------------------- DASHBOARDS ---------------------
@@ -161,7 +115,6 @@ async def client_dashboard(request: Request):
         return RedirectResponse("/", status_code=HTTP_302_FOUND)
     return templates.TemplateResponse("client.html", {"request": request, "user": user})
 
-
 @app.get("/pharmalab", response_class=HTMLResponse)
 async def staff_dashboard(request: Request):
     user = request.session.get("user")
@@ -169,8 +122,23 @@ async def staff_dashboard(request: Request):
         return RedirectResponse("/", status_code=HTTP_302_FOUND)
     return templates.TemplateResponse("pharmalab.html", {"request": request, "user": user})
 
-from fastapi import UploadFile, File
+# ---------------------- ADMIN USERS ---------------------
+@app.get("/admin/users", response_class=HTMLResponse)
+async def admin_users(request: Request):
+    db = next(get_db())
+    users = db.query(User).all()
+    return templates.TemplateResponse("admin_users.html", {"request": request, "users": users})
 
+@app.post("/admin/users/delete/{user_id}")
+async def delete_user(user_id: int):
+    db = next(get_db())
+    user = db.query(User).filter(User.id == user_id).first()
+    if user:
+        db.delete(user)
+        db.commit()
+    return RedirectResponse("/admin/users", status_code=HTTP_302_FOUND)
+
+# ---------------------- MANUAL UPLOAD ---------------------
 @app.get("/upload-manual", response_class=HTMLResponse)
 async def upload_manual_form(request: Request):
     user = request.session.get("user")
@@ -178,73 +146,41 @@ async def upload_manual_form(request: Request):
         return RedirectResponse("/", status_code=HTTP_302_FOUND)
     return templates.TemplateResponse("upload_manual.html", {"request": request})
 
-
 @app.post("/upload-manual", response_class=HTMLResponse)
-async def upload_manual(
-    request: Request,
-    instrument: str = Form(...),
-    manual: UploadFile = File(...)
-):
+async def upload_manual(request: Request, instrument: str = Form(...), manual: UploadFile = File(...)):
     user = request.session.get("user")
     if not user or user["role"] != "staff":
         return RedirectResponse("/", status_code=HTTP_302_FOUND)
 
-    if not instrument or not manual:
-        return templates.TemplateResponse("upload_manual.html", {
-            "request": request,
-            "error": "Missing instrument name or file."
-        })
-
     try:
         manual_dir = "manuals"
         os.makedirs(manual_dir, exist_ok=True)
-
         file_path = os.path.join(manual_dir, f"{instrument}.txt")
-        contents = await manual.read()
         with open(file_path, "wb") as f:
-            f.write(contents)
+            f.write(await manual.read())
 
         return templates.TemplateResponse("upload_manual.html", {
             "request": request,
             "success": f"Manual for '{instrument}' uploaded successfully."
         })
-
     except Exception as e:
         return templates.TemplateResponse("upload_manual.html", {
             "request": request,
             "error": f"Upload failed: {str(e)}"
         })
 
-
-
-# ---------------------- FORMS ---------------------
-
-templates = Jinja2Templates(directory="backend/templates")
-
-@app.get("/jobcard", response_class=HTMLResponse)
-async def jobcard_form(request: Request):
-    db = next(get_db())
-    jobcards = db.query(JobCard).all()
-    return templates.TemplateResponse("jobcard.html", {
-        "request": request,
-        "jobcards": jobcards
-    })
-
-@app.post("/submit-jobcard")
-async def submit_jobcard(request: Request):
-    return await handle_jobcard(request)
-
+# ---------------------- JOB CARD ---------------------
 @app.get("/jobcard", response_class=HTMLResponse)
 async def jobcard_form(request: Request):
     db = next(get_db())
     user = request.session.get("user")
-user_id = user["user_id"] if user else None
-  # 👈 current user
+    user_id = user["user_id"] if user else None
     jobcards = db.query(JobCard).filter(JobCard.user_id == user_id).all()
-    return templates.TemplateResponse("jobcard.html", {
-        "request": request,
-        "jobcards": jobcards
-    })
+    return templates.TemplateResponse("jobcard.html", {"request": request, "jobcards": jobcards})
+
+@app.post("/submit-jobcard")
+async def submit_jobcard(request: Request):
+    return await handle_jobcard(request)
 
 @app.post("/delete-jobcard/{jobcard_id}")
 async def delete_jobcard(jobcard_id: int):
@@ -255,7 +191,6 @@ async def delete_jobcard(jobcard_id: int):
         db.commit()
     return RedirectResponse("/jobcard", status_code=302)
 
-
 @app.get("/download-jobcards", response_class=FileResponse)
 def download_jobcards():
     db = next(get_db())
@@ -263,9 +198,7 @@ def download_jobcards():
 
     pdf_path = "jobcards_report.pdf"
     c = canvas.Canvas(pdf_path, pagesize=letter)
-    width, height = letter
-
-    y = height - 50
+    y = letter[1] - 50
     c.setFont("Helvetica", 12)
     c.drawString(100, y, "BiomedLink - Job Cards Report")
     y -= 30
@@ -273,8 +206,7 @@ def download_jobcards():
     for job in jobcards:
         if y < 100:
             c.showPage()
-            y = height - 50
-
+            y = letter[1] - 50
         c.drawString(50, y, f"ID: {job.id}")
         c.drawString(120, y, f"Equipment: {job.equipment_name}")
         y -= 20
@@ -286,38 +218,23 @@ def download_jobcards():
     c.save()
     return FileResponse(pdf_path, media_type='application/pdf', filename="jobcards_report.pdf")
 
-
-
+# ---------------------- SERVICE ORDER ---------------------
 @app.get("/serviceorder", response_class=HTMLResponse)
 async def serviceorder_form(request: Request):
     db = next(get_db())
-    serviceorders = db.query(ServiceOrder).all()
-    return templates.TemplateResponse("serviceorder.html", {
-        "request": request,
-        "serviceorders": serviceorders
-    })
-
+    user = request.session.get("user")
+    user_id = user["user_id"] if user else None
+    serviceorders = db.query(ServiceOrder).filter(ServiceOrder.user_id == user_id).all()
+    return templates.TemplateResponse("serviceorder.html", {"request": request, "serviceorders": serviceorders})
 
 @app.post("/submit-serviceorder")
 async def submit_serviceorder(request: Request):
     return await handle_serviceorder(request)
 
-@app.get("/serviceorder", response_class=HTMLResponse)
-async def serviceorder_form(request: Request):
-    db = next(get_db())
-    user = request.session.get("user")
-user_id = user["user_id"] if user else None
-
-    serviceorders = db.query(ServiceOrder).filter(ServiceOrder.user_id == user_id).all()
-    return templates.TemplateResponse("serviceorder.html", {
-        "request": request,
-        "serviceorders": serviceorders
-    })
-
 @app.post("/delete-serviceorder/{serviceorder_id}")
 async def delete_serviceorder(serviceorder_id: int):
     db = next(get_db())
-    serviceorder = db.query(serviceorder).filter(serviceorder.id == serviceorder_id).first()
+    serviceorder = db.query(ServiceOrder).filter(ServiceOrder.id == serviceorder_id).first()
     if serviceorder:
         db.delete(serviceorder)
         db.commit()
@@ -330,10 +247,8 @@ def download_serviceorders_pdf():
 
     buffer = io.BytesIO()
     pdf = canvas.Canvas(buffer, pagesize=A4)
-    width, height = A4
-
+    y = A4[1] - 50
     pdf.setFont("Helvetica", 12)
-    y = height - 50
     pdf.drawString(50, y, "Submitted Service Orders")
     y -= 30
 
@@ -344,7 +259,7 @@ def download_serviceorders_pdf():
         y -= 20
         if y < 50:
             pdf.showPage()
-            y = height - 50
+            y = A4[1] - 50
 
     pdf.save()
     buffer.seek(0)
@@ -367,15 +282,10 @@ async def ask_endpoint(request: Request):
     try:
         with open(manual_path, "r") as f:
             manual_content = f.read()
-
         ai_response = await ask_ai(query, manual_content)
         return JSONResponse({"response": ai_response})
     except Exception as e:
         return JSONResponse({"response": f"Error: {str(e)}"})
 
-# ---------------------- Initialize DB ---------------------
-
-from backend.db.database import Base, engine
-import backend.db.models  # Ensure models are registered
-
+# ---------------------- DB Init ---------------------
 Base.metadata.create_all(bind=engine)
