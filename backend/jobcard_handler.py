@@ -9,17 +9,19 @@ from fastapi.responses import RedirectResponse
 
 async def handle_jobcard(request: Request):
     form = await request.form()
-    print("Session:", request.session)
     equipment_name = form.get("equipment_name")
     maintenance_type = form.get("maintenance_type")
     date_of_service = form.get("date_of_service")
     spare_parts_used = form.get("spare_parts_used")
     file: UploadFile = form.get("file")
 
-    user_id = request.session.get("user_id")  # ✅ Get logged-in user ID from session
+    user = request.session.get("user")
+    if not user:
+        return RedirectResponse("/login", status_code=302)
 
+    user_id = user.get("user_id")
     if not user_id:
-        return RedirectResponse("/login", status_code=302)  # If no user, redirect to login
+        return RedirectResponse("/login", status_code=302)
 
     file_path = ""
     if file and file.filename:
@@ -36,13 +38,9 @@ async def handle_jobcard(request: Request):
         date_of_service=datetime.strptime(date_of_service, "%Y-%m-%d"),
         spare_parts_used=spare_parts_used,
         file_path=file_path,
-        user_id=user_id  # ✅ Save user ID to the record
+        user_id=user_id
     )
     db.add(jobcard)
     db.commit()
 
     return RedirectResponse("/jobcard", status_code=302)
-
-
-
-
