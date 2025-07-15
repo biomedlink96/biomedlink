@@ -41,3 +41,10 @@ async def handle_jobcard(request: Request):
     db.commit()
 
     return RedirectResponse("/jobcard", status_code=302)
+
+
+print("Session:", request.session)
+print("Equipment:", equipment_name)
+print("Date:", date_of_service)
+print("User ID:", user_id)
+
