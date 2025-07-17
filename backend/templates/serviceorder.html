@@ -79,6 +79,11 @@
           <td>{{ so.mission_fee }}</td>
           <td>{{ so.transport_fee }}</td>
           <td>{{ so.total_cost }}</td>
+          <td>
+        <form method="post" action="/delete-serviceorder/{{ so.id }}" onsubmit="return confirm('Are you sure you want to delete this service order?');">
+          <button type="submit" style="color:red;">Delete</button>
+        </form>
+      </td>
         </tr>
         {% endfor %}
       </tbody>
