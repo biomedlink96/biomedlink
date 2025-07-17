@@ -7,24 +7,24 @@ from backend.db.models import ServiceOrder
 
 async def handle_serviceorder(request: Request):
     form = await request.form()
+    user = request.session.get("user")
+    user_id = user["user_id"] if user else None
+
     engineer_name = form.get("engineer_name")
-    site_hospital = form_data.get("site_hospital")
-    issue = form.get("issue")
+    site_hospital = form.get("site_hospital")
+    mission_purpose = form.get("mission_purpose")
     spare_parts = form.get("spare_parts")
     arrival_date = datetime.strptime(form.get("arrival_date"), "%Y-%m-%d")
     return_date = datetime.strptime(form.get("return_date"), "%Y-%m-%d")
-    mission_fee = float(form.get("mission_fee") or 0)
-    transport_fee = float(form.get("transport_fee") or 0)
-    total_cost = float(form.get("total_cost") or 0)
+    mission_fee = float(form.get("mission_fee", 0))
+    transport_fee = float(form.get("transport_fee", 0))
+    total_cost = mission_fee + transport_fee
 
-    user_id = request.session.get("user_id")
-    if not user_id:
-        return RedirectResponse("/login", status_code=302)
-
-    db: Session = next(get_db())
-    service_order = ServiceOrder(
+    db = next(get_db())
+    new_order = ServiceOrder(
         engineer_name=engineer_name,
-        issue=issue,
+        site_hospital=site_hospital,
+        mission_purpose=mission_purpose,
         spare_parts=spare_parts,
         arrival_date=arrival_date,
         return_date=return_date,
@@ -33,7 +33,7 @@ async def handle_serviceorder(request: Request):
         total_cost=total_cost,
         user_id=user_id
     )
-    db.add(service_order)
+    db.add(new_order)
     db.commit()
 
     return RedirectResponse("/serviceorder", status_code=302)
