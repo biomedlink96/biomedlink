@@ -8,6 +8,7 @@ from backend.db.models import ServiceOrder
 async def handle_serviceorder(request: Request):
     form = await request.form()
     engineer_name = form.get("engineer_name")
+    site_hospital = form_data.get("site_hospital")
     issue = form.get("issue")
     spare_parts = form.get("spare_parts")
     arrival_date = datetime.strptime(form.get("arrival_date"), "%Y-%m-%d")
