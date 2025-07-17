@@ -35,7 +35,8 @@ class ServiceOrder(Base):
     __tablename__ = "serviceorders"
 
     id = Column(Integer, primary_key=True, index=True)
-    engineer_name = Column(String)
+    engineer_name = Column(String, nullable=False)
+    site_hospital = Column(String, nullable=False)  # ✅ New field added here
     mission_purpose = Column(Text)
     spare_parts = Column(Text)
     arrival_date = Column(Date)
@@ -44,6 +45,7 @@ class ServiceOrder(Base):
     transport_fee = Column(Float)
     total_cost = Column(Float)
 
-    user_id = Column(Integer, ForeignKey("users.id"))  # ✅ This line is REQUIRED
+    user_id = Column(Integer, ForeignKey("users.id"))  # ✅ FK to users table
     user = relationship("User", back_populates="serviceorders")
+
 
