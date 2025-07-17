@@ -12,6 +12,10 @@
 
   <h2>Job Card Form</h2>
   <form method="post" action="/submit-jobcard" enctype="multipart/form-data">
+
+    <label for="engineer_name">Engineer/Technician Name:</label>
+    <input type="text" id="engineer_name" name="engineer_name" required><br><br>
+    
     <label>Equipment Name:</label><br>
     <input type="text" name="equipment_name" required><br><br>
 
@@ -23,6 +27,9 @@
 
     <label>Service Date:</label><br>
     <input type="date" name="date_of_service" required><br><br>
+
+    <label for="job_description">Job Description / Result:</label><br>
+    <textarea id="job_description" name="job_description" rows="4" cols="50" required></textarea><br><br>
 
     <label>Spare Parts Used:</label><br>
     <input type="text" name="spare_parts_used"><br><br>
