@@ -9,9 +9,11 @@ from fastapi.responses import RedirectResponse
 
 async def handle_jobcard(request: Request):
     form = await request.form()
+    engineer_name = form.get("engineer_name")
     equipment_name = form.get("equipment_name")
     maintenance_type = form.get("maintenance_type")
     date_of_service = form.get("date_of_service")
+    job_description = form.get("job_description")
     spare_parts_used = form.get("spare_parts_used")
     file: UploadFile = form.get("file")
 
