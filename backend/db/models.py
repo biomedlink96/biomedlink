@@ -32,15 +32,18 @@ class JobCard(Base):
 
 # ---------------- ServiceOrder Model ----------------
 class ServiceOrder(Base):
-    __tablename__ = "service_orders"
+    __tablename__ = "serviceorders"
 
     id = Column(Integer, primary_key=True, index=True)
-    engineer_name = Column(String, nullable=False)
-    issue = Column(String, nullable=False)
-    spare_parts = Column(String, nullable=True)
-    arrival_date = Column(Date, nullable=False)
-    return_date = Column(Date, nullable=False)
-    mission_fee = Column(Float, nullable=False)
-    transport_fee = Column(Float, nullable=False)
-    total_cost = Column(Float, nullable=False)
-    user_id = Column(Integer, nullable=False)
+    engineer_name = Column(String)
+    mission_purpose = Column(Text)
+    spare_parts = Column(Text)
+    arrival_date = Column(Date)
+    return_date = Column(Date)
+    mission_fee = Column(Float)
+    transport_fee = Column(Float)
+    total_cost = Column(Float)
+
+    user_id = Column(Integer, ForeignKey("users.id"))  # ✅ This line is REQUIRED
+    user = relationship("User", back_populates="serviceorders")
+
