@@ -21,9 +21,11 @@ class JobCard(Base):
     __tablename__ = "jobcards"
 
     id = Column(Integer, primary_key=True, index=True)
+    engineer_name = Column(String)  # ✅ New field
     equipment_name = Column(String)
     maintenance_type = Column(String)
     date_of_service = Column(DateTime, default=datetime.utcnow)
+    job_description = Column(Text)  # ✅ New field
     spare_parts_used = Column(Text)
     file_path = Column(String)
     user_id = Column(Integer, ForeignKey("users.id"))
