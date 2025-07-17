@@ -7,19 +7,41 @@
     th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
     th { background-color: #f2f2f2; }
   </style>
+  <script>
+    function calculateTotal() {
+      const missionFee = parseFloat(document.getElementById("mission_fee").value) || 0;
+      const transportFee = parseFloat(document.getElementById("transport_fee").value) || 0;
+      document.getElementById("total_cost").value = (missionFee + transportFee).toFixed(2);
+    }
+  </script>
 </head>
 <body>
   <h2>Service Order Form</h2>
 
   <form method="post" action="/submit-serviceorder">
-    <label>Issue Description:</label><br>
+    <label>Name of Engineer:</label><br>
+    <input type="text" name="engineer_name" required><br><br>
+
+    <label>Mission/Service Order Purpose:</label><br>
     <textarea name="issue" rows="3" cols="40" required></textarea><br><br>
 
     <label>Spare Parts Used:</label><br>
     <textarea name="spare_parts" rows="2" cols="40"></textarea><br><br>
 
-    <label>Date:</label><br>
-    <input type="date" name="date" required><br><br>
+    <label>Arrival Date:</label><br>
+    <input type="date" name="arrival_date" required><br><br>
+
+    <label>Return Date:</label><br>
+    <input type="date" name="return_date" required><br><br>
+
+    <label>Mission Fee:</label><br>
+    <input type="number" id="mission_fee" name="mission_fee" step="0.01" oninput="calculateTotal()" required><br><br>
+
+    <label>Transport Fee:</label><br>
+    <input type="number" id="transport_fee" name="transport_fee" step="0.01" oninput="calculateTotal()" required><br><br>
+
+    <label>Total Mission Cost:</label><br>
+    <input type="number" id="total_cost" name="total_cost" step="0.01" readonly><br><br>
 
     <button type="submit">Submit Service Order</button>
   </form>
@@ -30,18 +52,28 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Issue</th>
+          <th>Engineer</th>
+          <th>Purpose</th>
           <th>Spare Parts</th>
-          <th>Date</th>
+          <th>Arrival</th>
+          <th>Return</th>
+          <th>Mission Fee</th>
+          <th>Transport Fee</th>
+          <th>Total Cost</th>
         </tr>
       </thead>
       <tbody>
         {% for so in serviceorders %}
         <tr>
           <td>{{ so.id }}</td>
+          <td>{{ so.engineer_name }}</td>
           <td>{{ so.issue }}</td>
           <td>{{ so.spare_parts }}</td>
-          <td>{{ so.date.strftime('%Y-%m-%d') }}</td>
+          <td>{{ so.arrival_date.strftime('%Y-%m-%d') }}</td>
+          <td>{{ so.return_date.strftime('%Y-%m-%d') }}</td>
+          <td>{{ so.mission_fee }}</td>
+          <td>{{ so.transport_fee }}</td>
+          <td>{{ so.total_cost }}</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -51,8 +83,8 @@
   {% endif %}
 
   <a href="/download-serviceorders-pdf" target="_blank">
-  <button>Download PDF</button>
-</a>
+    <button>Download PDF</button>
+  </a>
 
   <br><a href="/pharmalab">← Back to Dashboard</a>
 </body>
