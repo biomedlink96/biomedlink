@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Date, Float
 from datetime import datetime
 from .database import Base
 from sqlalchemy.orm import relationship
@@ -32,12 +32,15 @@ class JobCard(Base):
 
 # ---------------- ServiceOrder Model ----------------
 class ServiceOrder(Base):
-    __tablename__ = "serviceorders"
+    __tablename__ = "service_orders"
 
     id = Column(Integer, primary_key=True, index=True)
-    issue = Column(Text)
-    spare_parts = Column(Text)
-    date = Column(DateTime, default=datetime.utcnow)
-    user_id = Column(Integer, ForeignKey("users.id"))
-
-    user = relationship("User", back_populates="serviceorders")
+    engineer_name = Column(String, nullable=False)
+    issue = Column(String, nullable=False)
+    spare_parts = Column(String, nullable=True)
+    arrival_date = Column(Date, nullable=False)
+    return_date = Column(Date, nullable=False)
+    mission_fee = Column(Float, nullable=False)
+    transport_fee = Column(Float, nullable=False)
+    total_cost = Column(Float, nullable=False)
+    user_id = Column(Integer, nullable=False)
