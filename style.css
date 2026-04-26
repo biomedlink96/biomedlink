@@ -5,6 +5,12 @@ body {
     background: #f9f9f9;
 }
 
+/* LOGO IMAGE */
+.logo img {
+    height: 50px;
+    width: auto;
+}
+
 /* NAVBAR */
 nav {
     background: #0a7c4a;
